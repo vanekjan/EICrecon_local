@@ -350,31 +350,31 @@ void Plot_histos(int e_energy = 18, int p_energy = 275)
         h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("p e");
 
 
-        h_eta_positron[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
+        h_eta_positron[mom_bin][Q2bin][y_bin]->SetMarkerStyle(24);
         h_eta_positron[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_positron[mom_bin][Q2bin][y_bin]->SetMarkerColor(kBlue);
         h_eta_positron[mom_bin][Q2bin][y_bin]->SetLineColor(kBlue);
         h_eta_positron[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_pi_plus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(24);
+        h_eta_pi_plus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(25);
         h_eta_pi_plus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_pi_plus[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
         h_eta_pi_plus[mom_bin][Q2bin][y_bin]->SetLineColor(1);
         h_eta_pi_plus[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_K_plus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(25);
+        h_eta_K_plus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
         h_eta_K_plus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_K_plus[mom_bin][Q2bin][y_bin]->SetMarkerColor(6);
         h_eta_K_plus[mom_bin][Q2bin][y_bin]->SetLineColor(6);
         h_eta_K_plus[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_proton[mom_bin][Q2bin][y_bin]->SetMarkerStyle(47);
+        h_eta_proton[mom_bin][Q2bin][y_bin]->SetMarkerStyle(27);
         h_eta_proton[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-        h_eta_proton[mom_bin][Q2bin][y_bin]->SetMarkerColor(8);
-        h_eta_proton[mom_bin][Q2bin][y_bin]->SetLineColor(8);
+        h_eta_proton[mom_bin][Q2bin][y_bin]->SetMarkerColor(kOrange+2);
+        h_eta_proton[mom_bin][Q2bin][y_bin]->SetLineColor(kOrange+2);
         h_eta_proton[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
         TLegend *Leg_bins = new TLegend(0.2, 0.63, 0.54, 0.85 );
@@ -417,31 +417,31 @@ void Plot_histos(int e_energy = 18, int p_energy = 275)
         h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("p e");
 
 
-        h_eta_ele[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
+        h_eta_ele[mom_bin][Q2bin][y_bin]->SetMarkerStyle(24);
         h_eta_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_ele[mom_bin][Q2bin][y_bin]->SetMarkerColor(kBlue);
         h_eta_ele[mom_bin][Q2bin][y_bin]->SetLineColor(kBlue);
         h_eta_ele[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(24);
+        h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(25);
         h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
         h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetLineColor(1);
         h_eta_pi_minus[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(25);
+        h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
         h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
         h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerColor(6);
         h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetLineColor(6);
         h_eta_K_minus[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
 
-        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerStyle(47);
+        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerStyle(27);
         h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerColor(8);
-        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetLineColor(8);
+        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerColor(kOrange+2);
+        h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetLineColor(kOrange+2);
         h_eta_anti_proton[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
         TLegend *Leg_bins_anti = new TLegend(0.2, 0.63, 0.54, 0.85 );

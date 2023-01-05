@@ -187,6 +187,10 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   TH1D *h_K_pfRICH_PID_eff_MC[4];
   TH1D *h_p_pfRICH_PID_eff_MC[4];
 
+  TH1D *h_pi_pfRICH_PID_eff_MC_RC[4]; //PID efficiency - no PID baseline, good PID and mis-PID
+  TH1D *h_K_pfRICH_PID_eff_MC_RC[4];
+  TH1D *h_p_pfRICH_PID_eff_MC_RC[4];
+
   for(unsigned int PID_bin = 0; PID_bin < 4; PID_bin++)
   {
     h_pi_pfRICH_PID_eff_RC[PID_bin] = (TH1D*)inFile->Get(Form("h_pi_pfRICH_PID_eff_RC_%i", PID_bin)); //PID efficiency - good PID and mis-PID
@@ -196,6 +200,10 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_pi_pfRICH_PID_eff_MC[PID_bin] = (TH1D*)inFile->Get(Form("h_pi_pfRICH_PID_eff_MC_%i", PID_bin)); //PID efficiency - good PID and mis-PID
     h_K_pfRICH_PID_eff_MC[PID_bin] = (TH1D*)inFile->Get(Form("h_K_pfRICH_PID_eff_MC_%i", PID_bin));
     h_p_pfRICH_PID_eff_MC[PID_bin] = (TH1D*)inFile->Get(Form("h_p_pfRICH_PID_eff_MC_%i", PID_bin));
+
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin] = (TH1D*)inFile->Get(Form("h_pi_pfRICH_PID_eff_MC_RC_%i", PID_bin)); //PID efficiency - good PID and mis-PID
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin] = (TH1D*)inFile->Get(Form("h_K_pfRICH_PID_eff_MC_RC_%i", PID_bin));
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin] = (TH1D*)inFile->Get(Form("h_p_pfRICH_PID_eff_MC_RC_%i", PID_bin));
   }
 
   //TH1D *h_K_purity_pfRICH_MC[nMomBins][nQ2bins][nyInelParBins];
@@ -400,61 +408,203 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   //___________________________________________________________________________________________________________
 
-  TCanvas *pfRICH_PID_eff_MC = new TCanvas("pfRICH_PID_eff_MC", "pfRICH_PID_eff_MC", 1200, 1000);
+  TCanvas *pfRICH_PID_eff_MC = new TCanvas("pfRICH_PID_eff_MC", "pfRICH_PID_eff_MC", 3600, 3000);
   pfRICH_PID_eff_MC->Divide(3,3);
 
-  TCanvas *pfRICH_PID_eff_RC = new TCanvas("pfRICH_PID_eff_RC", "pfRICH_PID_eff_RC", 1200, 1000);
+  TCanvas *pfRICH_PID_eff_RC = new TCanvas("pfRICH_PID_eff_RC", "pfRICH_PID_eff_RC", 3600, 3000);
   pfRICH_PID_eff_RC->Divide(3,3);
+
+  TCanvas *pfRICH_PID_eff_MC_RC = new TCanvas("pfRICH_PID_eff_MC_RC", "pfRICH_PID_eff_MC_RC", 3600, 3000);
+  pfRICH_PID_eff_MC_RC->Divide(3,3);
+
+  TPaveText *pfRICH_PID_eff_pi_text[3];
+  TPaveText *pfRICH_PID_eff_K_text[3];
+  TPaveText *pfRICH_PID_eff_p_text[3];
 
   //bin 0 is the baseline without PID
   for(unsigned int PID_bin = 1; PID_bin < 4; PID_bin++)
   {
+    //PID_bin go from 1 to 3, because PID_bin 0 is baseline without any PID
+    //need to shift index for TPaveText by -1
+    if(PID_bin == 2) pfRICH_PID_eff_pi_text[PID_bin-1] = new TPaveText(0.25, 0.45, 0.54, 0.6, "NDC");
+    else pfRICH_PID_eff_pi_text[PID_bin-1] = new TPaveText(0.55, 0.15, 0.84, 0.3, "NDC");
+    pfRICH_PID_eff_pi_text[PID_bin-1]->SetTextFont(42);
+    pfRICH_PID_eff_pi_text[PID_bin-1]->SetFillColorAlpha(0, 0.01);
+
+    if(PID_bin == 2) pfRICH_PID_eff_K_text[PID_bin-1] = new TPaveText(0.25, 0.45, 0.54, 0.6, "NDC");
+    else pfRICH_PID_eff_K_text[PID_bin-1] = new TPaveText(0.55, 0.15, 0.84, 0.3, "NDC");
+    pfRICH_PID_eff_K_text[PID_bin-1]->SetTextFont(42);
+    pfRICH_PID_eff_K_text[PID_bin-1]->SetFillColorAlpha(0, 0.01);
+
+    pfRICH_PID_eff_p_text[PID_bin-1] = new TPaveText(0.55, 0.45, 0.84, 0.6, "NDC");
+    pfRICH_PID_eff_p_text[PID_bin-1]->SetTextFont(42);
+    pfRICH_PID_eff_p_text[PID_bin-1]->SetFillColorAlpha(0, 0.01);
+
+
+    if(PID_bin == 1)
+    {
+      pfRICH_PID_eff_pi_text[PID_bin-1]->AddText("MC #pi identified as #pi");
+      pfRICH_PID_eff_K_text[PID_bin-1]->AddText("MC K identified as K");
+      pfRICH_PID_eff_p_text[PID_bin-1]->AddText("MC p identified as p");
+    }
+
+    if(PID_bin == 2)
+    {
+      pfRICH_PID_eff_pi_text[PID_bin-1]->AddText("MC #pi mis-identified as K");
+      pfRICH_PID_eff_K_text[PID_bin-1]->AddText("MC K mis-identified as #pi");
+      pfRICH_PID_eff_p_text[PID_bin-1]->AddText("MC p mis-identified as #pi");
+
+    }
+
+    if(PID_bin == 3)
+    {
+      pfRICH_PID_eff_pi_text[PID_bin-1]->AddText("MC #pi mis-identified as p");
+      pfRICH_PID_eff_K_text[PID_bin-1]->AddText("MC K mis-identified as p");
+      pfRICH_PID_eff_p_text[PID_bin-1]->AddText("MC p mis-identified as K");
+    }
+
+
     pfRICH_PID_eff_MC->cd(PID_bin);
 
+    if(PID_bin == 1) h_pi_pfRICH_PID_eff_MC[0]->Sumw2();
     h_pi_pfRICH_PID_eff_MC[PID_bin]->Sumw2();
     h_pi_pfRICH_PID_eff_MC[PID_bin]->Divide(h_pi_pfRICH_PID_eff_MC[PID_bin], h_pi_pfRICH_PID_eff_MC[0], 1, 1, "b");
+    h_pi_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->SetTitle("p_{MC} (GeV/#it{c})");
+    h_pi_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->CenterTitle();
+    h_pi_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_pi_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->CenterTitle();
     h_pi_pfRICH_PID_eff_MC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_pi_text[PID_bin-1]->Draw("same");
+
+
 
 
     pfRICH_PID_eff_MC->cd(PID_bin+3);
 
+    if(PID_bin == 1) h_K_pfRICH_PID_eff_MC[0]->Sumw2();
     h_K_pfRICH_PID_eff_MC[PID_bin]->Sumw2();
     h_K_pfRICH_PID_eff_MC[PID_bin]->Divide(h_K_pfRICH_PID_eff_MC[PID_bin], h_K_pfRICH_PID_eff_MC[0], 1, 1, "b");
+    h_K_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->SetTitle("p_{MC} (GeV/#it{c})");
+    h_K_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->CenterTitle();
+    h_K_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_K_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->CenterTitle();
     h_K_pfRICH_PID_eff_MC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_K_text[PID_bin-1]->Draw("same");
 
 
     pfRICH_PID_eff_MC->cd(PID_bin+6);
 
+    if(PID_bin == 1) h_p_pfRICH_PID_eff_MC[0]->Sumw2();
     h_p_pfRICH_PID_eff_MC[PID_bin]->Sumw2();
     h_p_pfRICH_PID_eff_MC[PID_bin]->Divide(h_p_pfRICH_PID_eff_MC[PID_bin], h_p_pfRICH_PID_eff_MC[0], 1, 1, "b");
+    h_p_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->SetTitle("p_{MC} (GeV/#it{c})");
+    h_p_pfRICH_PID_eff_MC[PID_bin]->GetXaxis()->CenterTitle();
+    h_p_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_p_pfRICH_PID_eff_MC[PID_bin]->GetYaxis()->CenterTitle();
     h_p_pfRICH_PID_eff_MC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_p_text[PID_bin-1]->Draw("same");
+
 
     //__________________________________________________________________________________
 
     pfRICH_PID_eff_RC->cd(PID_bin);
 
+    if(PID_bin == 1) h_pi_pfRICH_PID_eff_RC[0]->Sumw2();
     h_pi_pfRICH_PID_eff_RC[PID_bin]->Sumw2();
     h_pi_pfRICH_PID_eff_RC[PID_bin]->Divide(h_pi_pfRICH_PID_eff_RC[PID_bin], h_pi_pfRICH_PID_eff_RC[0], 1, 1, "b");
+    h_pi_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->SetTitle("p_{RC} (GeV/#it{c})");
+    h_pi_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_pi_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_pi_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->CenterTitle();
     h_pi_pfRICH_PID_eff_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_pi_text[PID_bin-1]->Draw("same");
 
 
     pfRICH_PID_eff_RC->cd(PID_bin+3);
 
+    if(PID_bin == 1) h_K_pfRICH_PID_eff_RC[0]->Sumw2();
     h_K_pfRICH_PID_eff_RC[PID_bin]->Sumw2();
     h_K_pfRICH_PID_eff_RC[PID_bin]->Divide(h_K_pfRICH_PID_eff_RC[PID_bin], h_K_pfRICH_PID_eff_RC[0], 1, 1, "b");
+    h_K_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->SetTitle("p_{RC} (GeV/#it{c})");
+    h_K_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_K_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_K_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->CenterTitle();
     h_K_pfRICH_PID_eff_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_K_text[PID_bin-1]->Draw("same");
 
 
     pfRICH_PID_eff_RC->cd(PID_bin+6);
 
+    if(PID_bin == 1) h_p_pfRICH_PID_eff_RC[0]->Sumw2();
     h_p_pfRICH_PID_eff_RC[PID_bin]->Sumw2();
     h_p_pfRICH_PID_eff_RC[PID_bin]->Divide(h_p_pfRICH_PID_eff_RC[PID_bin], h_p_pfRICH_PID_eff_RC[0], 1, 1, "b");
+    h_p_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->SetTitle("p_{RC} (GeV/#it{c})");
+    h_p_pfRICH_PID_eff_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_p_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_p_pfRICH_PID_eff_RC[PID_bin]->GetYaxis()->CenterTitle();
     h_p_pfRICH_PID_eff_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_p_text[PID_bin-1]->Draw("same");
+
+    //_____________________________________________________________________________________________________________
+
+    pfRICH_PID_eff_MC_RC->cd(PID_bin);
+
+    if(PID_bin == 1) h_pi_pfRICH_PID_eff_MC_RC[0]->Sumw2();
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->Sumw2();
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->Divide(h_pi_pfRICH_PID_eff_MC_RC[PID_bin], h_pi_pfRICH_PID_eff_MC_RC[0], 1, 1, "b");
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->SetTitle("p_{MC_RC} (GeV/#it{c})");
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->CenterTitle();
+    h_pi_pfRICH_PID_eff_MC_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_pi_text[PID_bin-1]->Draw("same");
+
+
+
+
+    pfRICH_PID_eff_MC_RC->cd(PID_bin+3);
+
+    if(PID_bin == 1) h_K_pfRICH_PID_eff_MC_RC[0]->Sumw2();
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->Sumw2();
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->Divide(h_K_pfRICH_PID_eff_MC_RC[PID_bin], h_K_pfRICH_PID_eff_MC_RC[0], 1, 1, "b");
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->SetTitle("p_{MC_RC} (GeV/#it{c})");
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->CenterTitle();
+    h_K_pfRICH_PID_eff_MC_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_K_text[PID_bin-1]->Draw("same");
+
+
+    pfRICH_PID_eff_MC_RC->cd(PID_bin+6);
+
+    if(PID_bin == 1) h_p_pfRICH_PID_eff_MC_RC[0]->Sumw2();
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->Sumw2();
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->Divide(h_p_pfRICH_PID_eff_MC_RC[PID_bin], h_p_pfRICH_PID_eff_MC_RC[0], 1, 1, "b");
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->SetTitle("p_{MC_RC} (GeV/#it{c})");
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->GetXaxis()->CenterTitle();
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->SetTitle("Efficiency");
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->GetYaxis()->CenterTitle();
+    h_p_pfRICH_PID_eff_MC_RC[PID_bin]->Draw("p e");
+
+    pfRICH_PID_eff_p_text[PID_bin-1]->Draw("same");
+
+
+    //__________________________________________________________________________________
 
   }
 
   pfRICH_PID_eff_MC->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/pfRICH_PID_eff_MC.png", e_energy, p_energy));
   pfRICH_PID_eff_RC->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/pfRICH_PID_eff_RC.png", e_energy, p_energy));
+  pfRICH_PID_eff_MC_RC->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/pfRICH_PID_eff_MC_RC.png", e_energy, p_energy));
+
 
 
   //gPad->SetLogy();
@@ -903,7 +1053,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*100);
+          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*500);
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
           h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
