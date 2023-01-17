@@ -31,16 +31,7 @@
 #include"TLorentzVector.h"
 
 using namespace std;
-/*
-{"0.1": {"0.85": 0.6332832672698294, "0.95": 0.8838860654090215},
-"0.2": {"0.85": 0.7495818158985306, "0.95": 0.9228366502089709},
-"0.5": {"0.85": 0.00930384575910461, "0.95": 0.02228665375203912},
-"1.0": {"0.85": 0.001692827694491846, "0.95": 0.0036237053948322794},
-"2.0": {"0.85": 0.0001898238241173789, "0.95":0.00048096291971113834},
-"5.0": {"0.85": 0.00020018016214593134,"0.95": 0.0006523112180272588},
-"10.0": {"0.85": 0.000536412900269677, "0.95": 0.0022770026949322946},
-"20": {"0.85": 0.0006430092230696459, "0.95": 0.0018829746368912276}}
-*/
+
 void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 {
   if( !(e_energy == 18 && p_energy == 275) && !(e_energy == 10 && p_energy == 100) && !(e_energy == 5 && p_energy == 41))
@@ -114,8 +105,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   const int nyInelParBins = 4;
   float const y_bins[nyInelParBins+1] = { 0.01,0.05,0.1,0.5,0.95 };
 
-  const int nMomBins = 8;
-  float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,7,10, 18 };
+  const int nMomBins = 11;
+  float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,4,5,6,7,10, 18 };
 
   //load all files
   TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i-output.root", e_energy, p_energy, e_energy, p_energy), "READ");

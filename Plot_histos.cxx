@@ -114,8 +114,8 @@ void Plot_histos(int e_energy = 18, int p_energy = 275)
   const int nyInelParBins = 4;
   float const y_bins[nyInelParBins+1] = { 0.01,0.05,0.1,0.5,0.95 };
 
-  const int nMomBins = 8;
-  float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,7,10, 18 };
+  const int nMomBins = 11;
+  float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,4,5,6,7,10, 18 };
 
   //load all files
   TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i-output.root", e_energy, p_energy, e_energy, p_energy), "READ");
