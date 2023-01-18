@@ -150,22 +150,6 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   TH1D *h_p_pi_minus_pfRICH[nEtaBins+1];
 
-  for(unsigned int eta_bin = 0; eta_bin < nEtaBins+1; eta_bin++)
-  {
-    h_p_scat_ele[eta_bin] = new TH1D(Form("h_p_scat_ele_eta_%i", eta_bin), Form("h_p_scat_ele_eta_%i", eta_bin), 200, 0, 20);
-
-    h_p_pi_minus[eta_bin] = new TH1D(Form("h_p_pi_minus_eta_%i", eta_bin), Form("h_p_pi_minus_eta_%i", eta_bin), 200, 0, 20);
-
-    h_p_pi_minus_eCAL_85[eta_bin] = new TH1D(Form("h_p_pi_minus_eCAL_85_eta_%i", eta_bin), Form("h_p_pi_minus_eCAL_85_eta_%i", eta_bin), 200, 0, 20);
-    h_p_pi_minus_eCAL_95[eta_bin] = new TH1D(Form("h_p_pi_minus_eCAL_95_eta_%i", eta_bin), Form("h_p_pi_minus_eCAL_95_eta_%i", eta_bin), 200, 0, 20);
-
-    h_p_pi_minus_eCAL_85_pfRICH[eta_bin] = new TH1D(Form("h_p_pi_minus_eCAL_85_pfRICH_eta_%i", eta_bin), Form("h_p_pi_minus_eCAL_85_pfRICH_eta_%i", eta_bin), 200, 0, 20);
-    h_p_pi_minus_eCAL_95_pfRICH[eta_bin] = new TH1D(Form("h_p_pi_minus_eCAL_95_pfRICH_eta_%i", eta_bin), Form("h_p_pi_minus_eCAL_95_pfRICH_eta_%i", eta_bin), 200, 0, 20);
-
-    h_p_pi_minus_pfRICH[eta_bin] = new TH1D(Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin), Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin), 200, 0, 20);
-
-  }
-
 
 
   //reco tracks histograms
@@ -416,21 +400,6 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   y_inelPar_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/Electron_y_inelPar_RC_pfRICH.png", e_energy, p_energy));
 
   //___________________________________________________________________________________________________________
-
-
-  //gPad->SetLogy();
-
-  TCanvas *PID_pfRICH_can = new TCanvas("PID_pfRICH_can", "PID_pfRICH_can", 3000, 2000);
-  PID_pfRICH_can->Divide(3,2);
-
-  TCanvas *PID_pfRICH_pi_can = new TCanvas("PID_pfRICH_pi_can", "PID_pfRICH_pi_can", 3000, 2000);
-  PID_pfRICH_pi_can->Divide(3,2);
-
-  TCanvas *PID_pfRICH_K_can = new TCanvas("PID_pfRICH_K_can", "PID_pfRICH_K_can", 3000, 2000);
-  PID_pfRICH_K_can->Divide(3,2);
-
-  TCanvas *PID_pfRICH_p_can = new TCanvas("PID_pfRICH_p_can", "PID_pfRICH_p_can", 3000, 2000);
-  PID_pfRICH_p_can->Divide(3,2);
 
 
   for(unsigned int mom_bin = 0; mom_bin < nMomBins; mom_bin++)
@@ -1008,9 +977,210 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
         //_______________________________________________________________________________________________________________________
 
 
-      }
+      }//end for y bins
+    }//end for Q2 bins
+  }//end for mom bins
 
-    }
+
+  for(unsigned int eta_bin = 0; eta_bin < nEtaBins+1; eta_bin++)
+  {
+
+    //direct comparison of scattered e and pi- p spectra
+    TCanvas *p_scat_ele_can = new TCanvas(Form("p_scat_ele_can_eta_%i", eta_bin), Form("p_scat_ele_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_eta_%i", eta_bin));
+    h_p_scat_ele[eta_bin]->Sumw2();
+    h_p_scat_ele[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_scat_ele[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_scat_ele[eta_bin]->GetYaxis()->SetTitle("Counts");
+    h_p_scat_ele[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_scat_ele[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele[eta_bin]->SetMarkerColor(kRed);
+    h_p_scat_ele[eta_bin]->SetLineColor(kRed);
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_pi_minus[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eta_%i", eta_bin));
+    h_p_pi_minus[eta_bin]->Sumw2();
+    h_p_pi_minus[eta_bin]->SetMarkerStyle(25);
+    h_p_pi_minus[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus[eta_bin]->SetLineColor(1);
+    h_p_pi_minus[eta_bin]->Draw("p e same");
+
+    p_scat_ele_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_eCAL_can = new TCanvas(Form("p_scat_ele_eCAL_can_eta_%i", eta_bin), Form("p_scat_ele_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_eCAL_85[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_85_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_85[eta_bin]->Sumw2();
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_eCAL_85[eta_bin]->Draw("p e same");
+
+    h_p_pi_minus_eCAL_95[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_95_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_95[eta_bin]->Sumw2();
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerStyle(28);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerColor(6);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetLineColor(6);
+    h_p_pi_minus_eCAL_95[eta_bin]->Draw("p e same");
+
+    p_scat_ele_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_pfRICH_can = new TCanvas(Form("p_scat_ele_pfRICH_can_eta_%i", eta_bin), Form("p_scat_ele_pfRICH_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_pfRICH_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_pfRICH[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_pfRICH[eta_bin]->Draw("p e same");
+
+    p_scat_ele_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_pfRICH_eCAL_can = new TCanvas(Form("p_scat_ele_pfRICH_eCAL_can_eta_%i", eta_bin), Form("p_scat_ele_pfRICH_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_pfRICH_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_85_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Draw("p e same");
+
+
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_95_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(28);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerColor(6);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetLineColor(6);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
+
+    p_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //____________________________________________
+
+    // pi/e ratios
+    TCanvas *p_pi_over_scat_ele_can = new TCanvas(Form("p_pi_over_scat_ele_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus[eta_bin]->SetLineColor(1);
+    h_p_pi_minus[eta_bin]->Draw("p e");
+
+    p_pi_over_scat_ele_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_eCAL_can = new TCanvas(Form("p_pi_over_scat_ele_eCAL_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_eCAL_85[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus_eCAL_85[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_eCAL_85[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_eCAL_85[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_eCAL_85[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_eCAL_85[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_eCAL_85[eta_bin]->Draw("p e");
+
+
+    h_p_pi_minus_eCAL_95[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_eCAL_95[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_eCAL_95[eta_bin]->Draw("p e same");
+
+
+    p_pi_over_scat_ele_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_pfRICH_can = new TCanvas(Form("p_pi_over_scat_ele_pfRICH_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_pfRICH_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_pfRICH_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_pfRICH[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_pfRICH[eta_bin]->Draw("p e");
+
+    p_pi_over_scat_ele_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_pfRICH_eCAL_can = new TCanvas(Form("p_pi_over_scat_ele_pfRICH_eCAL_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_pfRICH_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_pfRICH_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Draw("p e");
+
+
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
+
+    p_pi_over_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //____________________________________________
+
   }
 
 
