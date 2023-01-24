@@ -168,6 +168,10 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   TH1D *h_eta_scat_ele_RC_eCAL[nMomBins][nQ2bins][nyInelParBins];
   TH1D *h_eta_scat_ele_RC_eCAL_E_over_p[nMomBins][nQ2bins][nyInelParBins];
 
+  //momentum distributions in eta bins
+  TH1D *h_p_scat_ele_RC_eCAL[nEtaBins+1];
+  TH1D *h_p_scat_ele_RC_eCAL_E_over_p[nEtaBins+1];
+
   //background - negative charged particles
   //TH1D *h_eta_neg_ch_part_RC[nMomBins][nQ2bins][nyInelParBins];
 
@@ -218,6 +222,10 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   TH1D *h_scat_ele_purity_lead_p[nMomBins][nQ2bins][nyInelParBins];
   TH1D *h_scat_ele_purity_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+
+  //momentum distributions in eta bins
+  TH1D *h_p_scat_ele_RC_lead_p[nEtaBins+1];
+  TH1D *h_p_scat_ele_RC_pfRICH[nEtaBins+1];
 
   //_____________________________________________________________________________________________
 
@@ -984,7 +992,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   for(unsigned int eta_bin = 0; eta_bin < nEtaBins+1; eta_bin++)
   {
-
+    //pur MC
     //direct comparison of scattered e and pi- p spectra
     TCanvas *p_scat_ele_can = new TCanvas(Form("p_scat_ele_can_eta_%i", eta_bin), Form("p_scat_ele_can_eta_%i", eta_bin), 1200, 1000);
     p_scat_ele_can->cd();
@@ -1180,6 +1188,86 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     p_pi_over_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
     //____________________________________________
+
+
+    //eCAL scattered electron selection
+    TCanvas *p_scat_ele_RC_eCAL_can = new TCanvas(Form("p_scat_ele_RC_eCAL_can_%i", eta_bin), Form("p_scat_ele_RC_eCAL_can_%i", eta_bin), 1200, 1000);
+    p_scat_ele_RC_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    //MC scattered e
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    //leading cluster tracks from eCAL
+    h_p_scat_ele_RC_eCAL[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_eta_%i", eta_bin));
+    h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerColor(1);
+    h_p_scat_ele_RC_eCAL[eta_bin]->SetLineColor(1);
+    h_p_scat_ele_RC_eCAL[eta_bin]->Draw("p e same");
+
+    p_scat_ele_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_RC_eCAL_E_over_p_can = new TCanvas(Form("p_scat_ele_RC_eCAL_E_over_p_can_%i", eta_bin), Form("p_scat_ele_RC_eCAL_E_over_p_can_%i", eta_bin), 1200, 1000);
+    p_scat_ele_RC_eCAL_E_over_p_can->cd();
+
+    gPad->SetLogy();
+
+    //MC scattered e
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    //leading cluster tracks from eCAL with E/p cut
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_E_over_p_eta_%i", eta_bin));
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerColor(1);
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetLineColor(1);
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->Draw("p e same");
+
+    p_scat_ele_RC_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_eCAL_E_over_p_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //______________________________________________________________________
+
+    //pfRICH/tracking scattered electron selection
+    TCanvas *p_scat_ele_RC_lead_p_can = new TCanvas(Form("p_scat_ele_RC_lead_p_can_%i", eta_bin), Form("p_scat_ele_RC_lead_p_can_%i", eta_bin), 1200, 1000);
+    p_scat_ele_RC_lead_p_can->cd();
+
+    gPad->SetLogy();
+
+    //MC scattered e
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_scat_ele_RC_lead_p[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_lead_p_eta_%i", eta_bin));
+    h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerColor(1);
+    h_p_scat_ele_RC_lead_p[eta_bin]->SetLineColor(1);
+    h_p_scat_ele_RC_lead_p[eta_bin]->Draw("p e same");
+
+    p_scat_ele_RC_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_lead_p_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+
+    TCanvas *p_scat_ele_RC_pfRICH_can = new TCanvas(Form("p_scat_ele_RC_pfRICH_can_%i", eta_bin), Form("p_scat_ele_RC_pfRICH_can_%i", eta_bin), 1200, 1000);
+    p_scat_ele_RC_pfRICH_can->cd();
+
+    gPad->SetLogy();
+
+    //MC scattered e
+    h_p_scat_ele[eta_bin]->Draw("p e");
+
+    h_p_scat_ele_RC_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_pfRICH_eta_%i", eta_bin));
+    h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_scat_ele_RC_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_scat_ele_RC_pfRICH[eta_bin]->Draw("p e same");
+
+    p_scat_ele_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //______________________________________________________________________
 
   }
 
