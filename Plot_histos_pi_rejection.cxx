@@ -108,8 +108,9 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   const int nMomBins = 11;
   float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,4,5,6,7,10, 18 };
 
+  //pfRICH eta acceptance mc_mom.Eta() > -3.8 && mc_mom.Eta() < -1.5
   const int nEtaBins = 4;
-  float const eta_bins[nEtaBins+1] = { -4, -3, -2, -1, 0 };
+  float const eta_bins[nEtaBins+1] = { -3.8, -3, -2.5, -2, -1.5};
 
   //load all files
   TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i-output.root", e_energy, p_energy, e_energy, p_energy), "READ");
@@ -992,6 +993,19 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   for(unsigned int eta_bin = 0; eta_bin < nEtaBins+1; eta_bin++)
   {
+    TPaveText *Text_eta_bins = new TPaveText(0.35, 0.75, 0.64, 0.85, "NDC");
+    Text_eta_bins->SetTextFont(42);
+    Text_eta_bins->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+    if( eta_bin < nEtaBins )
+    {
+      Text_eta_bins->AddText(Form("%0.1f < #eta < %0.1f", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+    }
+    else
+    {
+      Text_eta_bins->AddText(Form("%0.1f < #eta < %0.1f", eta_bins[0], eta_bins[nEtaBins]));
+    }
+    Text_eta_bins->SetFillColorAlpha(0, 0.01);
+
     //pur MC
     //direct comparison of scattered e and pi- p spectra
     TCanvas *p_scat_ele_can = new TCanvas(Form("p_scat_ele_can_eta_%i", eta_bin), Form("p_scat_ele_can_eta_%i", eta_bin), 1200, 1000);
@@ -1019,6 +1033,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus[eta_bin]->SetLineColor(1);
     h_p_pi_minus[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_scat_ele_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_eta_%i.png", e_energy, p_energy, eta_bin));
 
 
@@ -1045,6 +1061,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_95[eta_bin]->SetLineColor(6);
     h_p_pi_minus_eCAL_95[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_scat_ele_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
 
@@ -1062,6 +1080,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_pfRICH[eta_bin]->SetMarkerColor(8);
     h_p_pi_minus_pfRICH[eta_bin]->SetLineColor(8);
     h_p_pi_minus_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
 
     p_scat_ele_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
 
@@ -1090,6 +1110,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetLineColor(6);
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
     //____________________________________________
@@ -1110,6 +1132,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus[eta_bin]->SetMarkerColor(1);
     h_p_pi_minus[eta_bin]->SetLineColor(1);
     h_p_pi_minus[eta_bin]->Draw("p e");
+
+    Text_eta_bins->Draw("same");
 
     p_pi_over_scat_ele_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_eta_%i.png", e_energy, p_energy, eta_bin));
 
@@ -1138,6 +1162,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_95[eta_bin]->SetLineColor(1);
     h_p_pi_minus_eCAL_95[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
 
     p_pi_over_scat_ele_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
@@ -1157,6 +1182,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_pfRICH[eta_bin]->SetMarkerColor(1);
     h_p_pi_minus_pfRICH[eta_bin]->SetLineColor(1);
     h_p_pi_minus_pfRICH[eta_bin]->Draw("p e");
+
+    Text_eta_bins->Draw("same");
 
     p_pi_over_scat_ele_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
 
@@ -1185,6 +1212,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetLineColor(1);
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_pi_over_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
     //____________________________________________
@@ -1207,6 +1236,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_RC_eCAL[eta_bin]->SetLineColor(1);
     h_p_scat_ele_RC_eCAL[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_scat_ele_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
 
@@ -1225,6 +1256,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerColor(1);
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetLineColor(1);
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
 
     p_scat_ele_RC_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_eCAL_E_over_p_eta_%i.png", e_energy, p_energy, eta_bin));
 
@@ -1246,6 +1279,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_RC_lead_p[eta_bin]->SetLineColor(1);
     h_p_scat_ele_RC_lead_p[eta_bin]->Draw("p e same");
 
+    Text_eta_bins->Draw("same");
+
     p_scat_ele_RC_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_lead_p_eta_%i.png", e_energy, p_energy, eta_bin));
 
 
@@ -1264,6 +1299,8 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerColor(1);
     h_p_scat_ele_RC_pfRICH[eta_bin]->SetLineColor(1);
     h_p_scat_ele_RC_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
 
     p_scat_ele_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
 
