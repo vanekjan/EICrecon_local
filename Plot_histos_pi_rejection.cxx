@@ -152,6 +152,20 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   TH1D *h_p_pi_minus_pfRICH[nEtaBins+1];
 
 
+  //MC tracks as a function of RC momentum
+  //direct MC -> RC matching
+  TH1D *h_p_scat_ele_MC_RC[nEtaBins+1];
+
+  TH1D *h_p_pi_minus_MC_RC[nEtaBins+1];
+
+  TH1D *h_p_pi_minus_MC_RC_eCAL_85[nEtaBins+1];
+  TH1D *h_p_pi_minus_MC_RC_eCAL_95[nEtaBins+1];
+
+  TH1D *h_p_pi_minus_MC_RC_eCAL_85_pfRICH[nEtaBins+1];
+  TH1D *h_p_pi_minus_MC_RC_eCAL_95_pfRICH[nEtaBins+1];
+
+  TH1D *h_p_pi_minus_MC_RC_pfRICH[nEtaBins+1];
+
 
   //reco tracks histograms
   //with eCAL
@@ -172,6 +186,9 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   //momentum distributions in eta bins
   TH1D *h_p_scat_ele_RC_eCAL[nEtaBins+1];
   TH1D *h_p_scat_ele_RC_eCAL_E_over_p[nEtaBins+1];
+
+  TH1D *h_scat_ele_purity_p_eCAL[nEtaBins+1];
+  TH1D *h_scat_ele_purity_p_eCAL_E_over_p[nEtaBins+1];
 
   //background - negative charged particles
   //TH1D *h_eta_neg_ch_part_RC[nMomBins][nQ2bins][nyInelParBins];
@@ -223,6 +240,9 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   TH1D *h_scat_ele_purity_lead_p[nMomBins][nQ2bins][nyInelParBins];
   TH1D *h_scat_ele_purity_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+
+  TH1D *h_scat_ele_purity_p_lead_p[nEtaBins+1];
+  TH1D *h_scat_ele_purity_p_pfRICH[nEtaBins+1];
 
   //momentum distributions in eta bins
   TH1D *h_p_scat_ele_RC_lead_p[nEtaBins+1];
@@ -1006,7 +1026,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     }
     Text_eta_bins->SetFillColorAlpha(0, 0.01);
 
-    //pur MC
+    //pure MC
     //direct comparison of scattered e and pi- p spectra
     TCanvas *p_scat_ele_can = new TCanvas(Form("p_scat_ele_can_eta_%i", eta_bin), Form("p_scat_ele_can_eta_%i", eta_bin), 1200, 1000);
     p_scat_ele_can->cd();
@@ -1015,7 +1035,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     h_p_scat_ele[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_eta_%i", eta_bin));
     h_p_scat_ele[eta_bin]->Sumw2();
-    h_p_scat_ele[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_scat_ele[eta_bin]->GetXaxis()->SetTitle("p_{MC} (GeV)/#it{c}");
     h_p_scat_ele[eta_bin]->GetXaxis()->CenterTitle();
     h_p_scat_ele[eta_bin]->GetYaxis()->SetTitle("Counts");
     h_p_scat_ele[eta_bin]->GetYaxis()->CenterTitle();
@@ -1071,6 +1091,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     gPad->SetLogy();
 
+    h_p_scat_ele[eta_bin]->GetXaxis()->SetRangeUser(0, 5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele[eta_bin]->Draw("p e");
 
     h_p_pi_minus_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin));
@@ -1123,7 +1144,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     h_p_pi_minus[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
-    h_p_pi_minus[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus[eta_bin]->GetXaxis()->SetTitle("p_{MC} (GeV)/#it{c}");
     h_p_pi_minus[eta_bin]->GetXaxis()->CenterTitle();
     h_p_pi_minus[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
     h_p_pi_minus[eta_bin]->GetYaxis()->CenterTitle();
@@ -1144,7 +1165,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     h_p_pi_minus_eCAL_85[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
-    h_p_pi_minus_eCAL_85[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_eCAL_85[eta_bin]->GetXaxis()->SetTitle("p_{MC} (GeV)/#it{c}");
     h_p_pi_minus_eCAL_85[eta_bin]->GetXaxis()->CenterTitle();
     h_p_pi_minus_eCAL_85[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
     h_p_pi_minus_eCAL_85[eta_bin]->GetYaxis()->CenterTitle();
@@ -1173,8 +1194,9 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     h_p_pi_minus_pfRICH[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
-    h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->SetTitle("p_{MC} (GeV)/#it{c}");
     h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_pfRICH[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_pi_minus_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
     h_p_pi_minus_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
     h_p_pi_minus_pfRICH[eta_bin]->SetMarkerStyle(21);
@@ -1194,8 +1216,9 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Divide(h_p_scat_ele[eta_bin]);
-    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV)/#it{c}");
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetTitle("p_{MC}( (GeV)/#it{c}");
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(21);
@@ -1216,7 +1239,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     p_pi_over_scat_ele_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
 
-    //____________________________________________
+    //______________________________________________________________________________________________________________________________________________________________________
 
 
     //eCAL scattered electron selection
@@ -1226,6 +1249,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     //MC scattered e
+    h_p_scat_ele[eta_bin]->GetXaxis()->SetRangeUser(0,20); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele[eta_bin]->Draw("p e");
 
     //leading cluster tracks from eCAL
@@ -1291,6 +1315,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     gPad->SetLogy();
 
     //MC scattered e
+    h_p_scat_ele[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele[eta_bin]->Draw("p e");
 
     h_p_scat_ele_RC_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_pfRICH_eta_%i", eta_bin));
@@ -1304,7 +1329,228 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     p_scat_ele_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
 
-    //______________________________________________________________________
+    //__________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+    TCanvas *p_scat_ele_MC_RC_can = new TCanvas(Form("p_scat_ele_MC_RC_can_eta_%i", eta_bin), Form("p_scat_ele_MC_RC_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_MC_RC_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele_MC_RC[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_MC_RC_eta_%i", eta_bin));
+    h_p_scat_ele_MC_RC[eta_bin]->Sumw2();
+    h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
+    h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_scat_ele_MC_RC[eta_bin]->GetYaxis()->SetTitle("Counts");
+    h_p_scat_ele_MC_RC[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_scat_ele_MC_RC[eta_bin]->SetMarkerStyle(20);
+    h_p_scat_ele_MC_RC[eta_bin]->SetMarkerSize(2);
+    h_p_scat_ele_MC_RC[eta_bin]->SetMarkerColor(kRed);
+    h_p_scat_ele_MC_RC[eta_bin]->SetLineColor(kRed);
+    h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_MC_RC[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerStyle(25);
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_scat_ele_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_MC_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerStyle(24);
+    h_p_scat_ele_RC_lead_p[eta_bin]->Draw("p e same");
+
+    p_scat_ele_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_MC_RC_and_RC_scat_ele_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_MC_RC_eCAL_can = new TCanvas(Form("p_scat_ele_MC_RC_eCAL_can_eta_%i", eta_bin), Form("p_scat_ele_MC_RC_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_MC_RC_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Draw("p e same");
+
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerStyle(28);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerColor(6);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetLineColor(6);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_scat_ele_MC_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_MC_RC_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_MC_RC_pfRICH_can = new TCanvas(Form("p_scat_ele_MC_RC_pfRICH_can_eta_%i", eta_bin), Form("p_scat_ele_MC_RC_pfRICH_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_MC_RC_pfRICH_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
+    h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_scat_ele_MC_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_MC_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_scat_ele_MC_RC_pfRICH_eCAL_can = new TCanvas(Form("p_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), Form("p_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_scat_ele_MC_RC_pfRICH_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerColor(8);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetLineColor(8);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Draw("p e same");
+
+
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->Sumw2();
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(28);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerColor(6);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetLineColor(6);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_scat_ele_MC_RC_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_scat_ele_MC_RC_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //____________________________________________
+
+    // pi/e ratios
+    TCanvas *p_pi_over_scat_ele_MC_RC_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_MC_RC_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_MC_RC[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
+    h_p_pi_minus_MC_RC[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_MC_RC[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC[eta_bin]->Draw("p e");
+
+    Text_eta_bins->Draw("same");
+
+    p_pi_over_scat_ele_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_MC_RC_eCAL_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_eCAL_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_MC_RC_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Draw("p e");
+
+
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_pi_over_scat_ele_MC_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_MC_RC_pfRICH_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_pfRICH_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_pfRICH_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_MC_RC_pfRICH_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Draw("p e");
+
+    Text_eta_bins->Draw("same");
+
+    p_pi_over_scat_ele_MC_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->GetYaxis()->SetTitle("#pi^{-}/scat e");
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(21);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Draw("p e");
+
+
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->Divide(h_p_scat_ele_MC_RC[eta_bin]);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(24);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerColor(1);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetLineColor(1);
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    //______________________________________________________________________________________________________________________________________________________________________
+
 
   }
 
