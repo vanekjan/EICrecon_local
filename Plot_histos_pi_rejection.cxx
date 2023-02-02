@@ -98,13 +98,13 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   //___________________________________________________
 
-
+/*
   const int nQ2bins = 4;
   float const Q2_bins[nQ2bins+1] = { 1,3,5,10,20 };
 
   const int nyInelParBins = 4;
   float const y_bins[nyInelParBins+1] = { 0.01,0.05,0.1,0.5,0.95 };
-
+*/
   const int nMomBins = 11;
   float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,4,5,6,7,10, 18 };
 
@@ -117,136 +117,108 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
   //TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i_p_scat_bins-output.root", e_energy, p_energy, e_energy, p_energy), "READ");
 
   //eta distributions in multiple Q^2 and inelasticity bins
-  TH1D *h_eta_scat_ele[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_scat_ele[nMomBins];
 
-  TH1D *h_eta_pi_minus[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_pi_minus[nMomBins];
 
-  TH1D *h_eta_pi_minus_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_pi_minus_pfRICH[nMomBins];
 
-  TH1D *h_eta_pi_minus_eCAL_85[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_pi_minus_eCAL_95[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_pi_minus_eCAL_85[nMomBins];
+  TH1F *h_eta_pi_minus_eCAL_95[nMomBins];
 
-  TH1D *h_eta_pi_minus_eCAL_85_pfRICH[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_pi_minus_eCAL_95_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_pi_minus_eCAL_85_pfRICH[nMomBins];
+  TH1F *h_eta_pi_minus_eCAL_95_pfRICH[nMomBins];
 
-  TH1D *h_eta_K_minus[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_K_minus_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_K_minus[nMomBins];
+  TH1F *h_eta_K_minus_pfRICH[nMomBins];
 
-  TH1D *h_eta_anti_proton[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_anti_proton_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_anti_proton[nMomBins];
+  TH1F *h_eta_anti_proton_pfRICH[nMomBins];
 
   //p distributions in multiple eta bins
   //use just wide Q^2 and y selection
 
   //eta bins defined higher + 1 eta bin for pfRICH acceptance window
-  TH1D *h_p_scat_ele[nEtaBins+1];
+  TH1F *h_p_scat_ele[nEtaBins+1];
 
-  TH1D *h_p_pi_minus[nEtaBins+1];
+  TH1F *h_p_pi_minus[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_eCAL_85[nEtaBins+1];
-  TH1D *h_p_pi_minus_eCAL_95[nEtaBins+1];
+  TH1F *h_p_pi_minus_eCAL_85[nEtaBins+1];
+  TH1F *h_p_pi_minus_eCAL_95[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_eCAL_85_pfRICH[nEtaBins+1];
-  TH1D *h_p_pi_minus_eCAL_95_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_eCAL_85_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_eCAL_95_pfRICH[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_pfRICH[nEtaBins+1];
 
 
   //MC tracks as a function of RC momentum
   //direct MC -> RC matching
-  TH1D *h_p_scat_ele_MC_RC[nEtaBins+1];
+  TH1F *h_p_scat_ele_MC_RC[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_MC_RC[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_MC_RC_eCAL_85[nEtaBins+1];
-  TH1D *h_p_pi_minus_MC_RC_eCAL_95[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC_eCAL_85[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC_eCAL_95[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_MC_RC_eCAL_85_pfRICH[nEtaBins+1];
-  TH1D *h_p_pi_minus_MC_RC_eCAL_95_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC_eCAL_85_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC_eCAL_95_pfRICH[nEtaBins+1];
 
-  TH1D *h_p_pi_minus_MC_RC_pfRICH[nEtaBins+1];
+  TH1F *h_p_pi_minus_MC_RC_pfRICH[nEtaBins+1];
 
 
   //reco tracks histograms
   //with eCAL
-  TH1D* h_energy_RC = (TH1D*)inFile->Get("h_energy_RC");
+  TH1F* h_energy_RC = (TH1F*)inFile->Get("h_energy_RC");
 
-  TH1D* h_momentum_RC = (TH1D*)inFile->Get("h_momentum_RC");
+  TH1F* h_momentum_RC = (TH1F*)inFile->Get("h_momentum_RC");
 
-  TH1D *h_E_over_p_RC = (TH1D*)inFile->Get("h_E_over_p_RC");
+  TH1F *h_E_over_p_RC = (TH1F*)inFile->Get("h_E_over_p_RC");
 
-  TH1D* h_Q2_RC = (TH1D*)inFile->Get("h_Q2_RC");
+  TH1F* h_Q2_RC = (TH1F*)inFile->Get("h_Q2_RC");
 
-  TH1D *h_y_inelPar_RC = (TH1D*)inFile->Get("h_y_inelPar_RC");
+  TH1F *h_y_inelPar_RC = (TH1F*)inFile->Get("h_y_inelPar_RC");
 
   //reconstructed scattered electron
-  TH1D *h_eta_scat_ele_RC_eCAL[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_scat_ele_RC_eCAL_E_over_p[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_eta_scat_ele_RC_eCAL[nMomBins];
+  TH1F *h_eta_scat_ele_RC_eCAL_E_over_p[nMomBins];
 
   //momentum distributions in eta bins
-  TH1D *h_p_scat_ele_RC_eCAL[nEtaBins+1];
-  TH1D *h_p_scat_ele_RC_eCAL_E_over_p[nEtaBins+1];
+  TH1F *h_p_scat_ele_RC_eCAL[nEtaBins+1];
+  TH1F *h_p_scat_ele_RC_eCAL_E_over_p[nEtaBins+1];
 
-  TH1D *h_scat_ele_purity_p_eCAL[nEtaBins+1];
-  TH1D *h_scat_ele_purity_p_eCAL_E_over_p[nEtaBins+1];
+  TH1F *h_scat_ele_purity_p_eCAL[nEtaBins+1];
+  TH1F *h_scat_ele_purity_p_eCAL_E_over_p[nEtaBins+1];
 
-  //background - negative charged particles
-  //TH1D *h_eta_neg_ch_part_RC[nMomBins][nQ2bins][nyInelParBins];
-
-  //negative charged particles after E/p cut
-  //TH1D *h_eta_neg_ch_part_RC_eCAL_cut[nMomBins][nQ2bins][nyInelParBins];
-
-  //negative charged par after pfRCIH veto
-  //TH1D *h_eta_neg_ch_part_RC_pFRICH_cut[nMomBins][nQ2bins][nyInelParBins];
-
-  //negative charged particles after eCAL+pfRCIH veto
-  //TH1D *h_eta_neg_ch_part_RC_eCAL_pfRICH_cut[nMomBins][nQ2bins][nyInelParBins];
 
   //MC-RC matching
-  TH1D *h_scat_ele_purity_eCAL[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_scat_ele_purity_eCAL_E_over_p[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_scat_ele_purity_eCAL[nMomBins];
+  TH1F *h_scat_ele_purity_eCAL_E_over_p[nMomBins];
 
   //with pfRICH
-  TH1D* h_momentum_RC_pfRICH = (TH1D*)inFile->Get("h_momentum_RC_pfRICH");
+  TH1F* h_momentum_RC_pfRICH = (TH1F*)inFile->Get("h_momentum_RC_pfRICH");
 
-  TH1D* h_Q2_RC_pfRICH = (TH1D*)inFile->Get("h_Q2_RC_pfRICH");
+  TH1F* h_Q2_RC_pfRICH = (TH1F*)inFile->Get("h_Q2_RC_pfRICH");
 
-  TH1D *h_y_inelPar_RC_pfRICH = (TH1D*)inFile->Get("h_y_inelPar_RC_pfRICH");
+  TH1F *h_y_inelPar_RC_pfRICH = (TH1F*)inFile->Get("h_y_inelPar_RC_pfRICH");
 
-  TH1D *h_eta_scat_ele_RC_lead_p[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_eta_scat_ele_RC_pfRICH[nMomBins][nQ2bins][nyInelParBins];
-
-
-  TH1D *h_pi_pfRICH_PID_eff_RC[4]; //PID efficiency - no PID baseline, good PID and mis-PID
-  TH1D *h_K_pfRICH_PID_eff_RC[4];
-  TH1D *h_p_pfRICH_PID_eff_RC[4];
-
-  TH1D *h_pi_pfRICH_PID_eff_MC[4]; //PID efficiency - no PID baseline, good PID and mis-PID
-  TH1D *h_K_pfRICH_PID_eff_MC[4];
-  TH1D *h_p_pfRICH_PID_eff_MC[4];
-
-  TH1D *h_pi_pfRICH_PID_eff_MC_RC_match[4]; //PID efficiency - no PID baseline, good PID and mis-PID
-  TH1D *h_K_pfRICH_PID_eff_MC_RC_match[4];
-  TH1D *h_p_pfRICH_PID_eff_MC_RC_match[4];
-
-  TH2D *h_pi_pfRICH_MC_p_RC_p = (TH2D*)inFile->Get("h_pi_pfRICH_MC_p_RC_p");
-  TH2D *h_K_pfRICH_MC_p_RC_p = (TH2D*)inFile->Get("h_K_pfRICH_MC_p_RC_p");
-  TH2D *h_p_pfRICH_MC_p_RC_p = (TH2D*)inFile->Get("h_p_pfRICH_MC_p_RC_p");
+  TH1F *h_eta_scat_ele_RC_lead_p[nMomBins];
+  TH1F *h_eta_scat_ele_RC_pfRICH[nMomBins];
 
 
 
-  //TH1D *h_K_purity_pfRICH_MC[nMomBins][nQ2bins][nyInelParBins];
-  //TH1D *h_K_purity_pfRICH_RC[nMomBins][nQ2bins][nyInelParBins];
+  //TH1F *h_K_purity_pfRICH_MC[nMomBins];
+  //TH1F *h_K_purity_pfRICH_RC[nMomBins];
 
-  TH1D *h_scat_ele_purity_lead_p[nMomBins][nQ2bins][nyInelParBins];
-  TH1D *h_scat_ele_purity_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+  TH1F *h_scat_ele_purity_lead_p[nMomBins];
+  TH1F *h_scat_ele_purity_pfRICH[nMomBins];
 
-  TH1D *h_scat_ele_purity_p_lead_p[nEtaBins+1];
-  TH1D *h_scat_ele_purity_p_pfRICH[nEtaBins+1];
+  TH1F *h_scat_ele_purity_p_lead_p[nEtaBins+1];
+  TH1F *h_scat_ele_purity_p_pfRICH[nEtaBins+1];
 
   //momentum distributions in eta bins
-  TH1D *h_p_scat_ele_RC_lead_p[nEtaBins+1];
-  TH1D *h_p_scat_ele_RC_pfRICH[nEtaBins+1];
+  TH1F *h_p_scat_ele_RC_lead_p[nEtaBins+1];
+  TH1F *h_p_scat_ele_RC_pfRICH[nEtaBins+1];
 
   //_____________________________________________________________________________________________
 
@@ -433,581 +405,560 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
   for(unsigned int mom_bin = 0; mom_bin < nMomBins; mom_bin++)
   {
-    for(unsigned int Q2bin = 0; Q2bin < nQ2bins; Q2bin++)
+
+    //MC histograms
+    TCanvas *eta_scat_ele_can = new TCanvas(Form("eta_scat_ele_can_mom_%i", mom_bin), Form("eta_scat_ele_can_mom_%i", mom_bin), 2000, 1500);
+
+    eta_scat_ele_can->cd();
+
+
+    h_eta_scat_ele[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_scat_ele_mom_%i", mom_bin));
+
+
+    h_eta_pi_minus[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_mom_%i", mom_bin));
+
+    h_eta_pi_minus_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_pfRICH_mom_%i", mom_bin));
+
+    h_eta_pi_minus_eCAL_85[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_eCAL_85_mom_%i", mom_bin));
+    h_eta_pi_minus_eCAL_95[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_eCAL_95_mom_%i", mom_bin));
+
+    h_eta_pi_minus_eCAL_85_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_eCAL_85_pfRICH_mom_%i", mom_bin));
+    h_eta_pi_minus_eCAL_95_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_pi_minus_eCAL_95_pfRICH_mom_%i", mom_bin));
+
+    h_eta_K_minus[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_mom_%i", mom_bin));
+    h_eta_K_minus_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_pfRICH_mom_%i", mom_bin));
+
+    h_eta_anti_proton[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_anti_proton_mom_%i", mom_bin));
+    h_eta_anti_proton_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_anti_proton_pfRICH_mom_%i", mom_bin));
+
+    if(h_eta_scat_ele[mom_bin]->Integral() == 0 ) continue;
+    if( h_eta_pi_minus[mom_bin]->Integral() < 15 ) continue;
+
+    if(h_eta_scat_ele[mom_bin]->Integral() > 0 && h_eta_pi_minus[mom_bin]->Integral() > 15)
     {
-      for(unsigned int y_bin = 0; y_bin < nyInelParBins; y_bin++)
+      //h_eta_scat_ele[mom_bin]->Draw("p e");
+
+      //cout<<h_eta_pi_minus_eCAL_85[mom_bin]->GetMaximum()<<endl;
+
+      TCanvas *eta_scat_ele_pi_minus_can = new TCanvas(Form("eta_scat_ele_pi_minus_can_mom_%i", mom_bin), Form("eta_scat_ele_pi_minus_can_mom_%i", mom_bin), 2000, 1500);
+
+      eta_scat_ele_pi_minus_can->cd();
+
+      gPad->SetLogy();
+
+      h_eta_scat_ele[mom_bin]->GetXaxis()->SetTitle("#eta");
+      h_eta_scat_ele[mom_bin]->GetXaxis()->CenterTitle();
+      h_eta_scat_ele[mom_bin]->GetYaxis()->SetTitle("Counts");
+      h_eta_scat_ele[mom_bin]->GetYaxis()->CenterTitle();
+      //for lin scale
+      //if( h_eta_scat_ele[mom_bin]->GetMaximum() < h_eta_pi_minus[mom_bin]->GetMaximum() ) h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(0., h_eta_pi_minus[mom_bin]->GetMaximum()*1.7);
+      //else h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(0.5, h_eta_scat_ele[mom_bin]->GetMaximum()*1.7);
+      //for log scale
+
+      if(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->GetMaximum() != 0 )
       {
-        //MC histograms
-        TCanvas *eta_scat_ele_can = new TCanvas(Form("eta_scat_ele_can_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), Form("eta_scat_ele_can_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), 2000, 1500);
+        h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->GetMaximum()*1e-8, h_eta_scat_ele[mom_bin]->GetMaximum()*1e8);
+      }
+      else if(h_eta_pi_minus_eCAL_85[mom_bin]->GetMaximum() != 0)
+      {
+        h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_eCAL_85[mom_bin]->GetMaximum()*1e-8, h_eta_scat_ele[mom_bin]->GetMaximum()*1e8);
+      }
+      else
+      {
+        h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus[mom_bin]->GetMaximum()*1e-8, h_eta_pi_minus[mom_bin]->GetMaximum()*1e10);
+      }
+      h_eta_scat_ele[mom_bin]->SetMarkerStyle(20);
+      h_eta_scat_ele[mom_bin]->SetMarkerSize(2);
+      h_eta_scat_ele[mom_bin]->SetMarkerColor(kRed);
+      h_eta_scat_ele[mom_bin]->SetLineColor(kRed);
+      //h_eta_scat_ele[mom_bin]->SetMinimum(0);
+      h_eta_scat_ele[mom_bin]->Draw("p e");
+
+
+      h_eta_pi_minus[mom_bin]->SetMarkerStyle(25);
+      h_eta_pi_minus[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus[mom_bin]->SetMarkerColor(1);
+      h_eta_pi_minus[mom_bin]->SetLineColor(1);
+      h_eta_pi_minus[mom_bin]->Draw("p e same");
+
+      h_eta_pi_minus_eCAL_85[mom_bin]->SetMarkerStyle(24);
+      h_eta_pi_minus_eCAL_85[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus_eCAL_85[mom_bin]->SetMarkerColor(8);
+      h_eta_pi_minus_eCAL_85[mom_bin]->SetLineColor(8);
+      h_eta_pi_minus_eCAL_85[mom_bin]->Draw("p e same");
 
-        eta_scat_ele_can->cd();
+      h_eta_pi_minus_eCAL_95[mom_bin]->SetMarkerStyle(28);
+      h_eta_pi_minus_eCAL_95[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus_eCAL_95[mom_bin]->SetMarkerColor(6);
+      h_eta_pi_minus_eCAL_95[mom_bin]->SetLineColor(6);
+      h_eta_pi_minus_eCAL_95[mom_bin]->Draw("p e same");
 
+      h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->SetMarkerStyle(47);
+      h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->SetMarkerColor(kBlue);
+      h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->SetLineColor(kBlue);
+      h_eta_pi_minus_eCAL_85_pfRICH[mom_bin]->Draw("p e same");
+
+      h_eta_pi_minus_eCAL_95_pfRICH[mom_bin]->SetMarkerStyle(33);
+      h_eta_pi_minus_eCAL_95_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus_eCAL_95_pfRICH[mom_bin]->SetMarkerColor(kOrange+2);
+      h_eta_pi_minus_eCAL_95_pfRICH[mom_bin]->SetLineColor(kOrange+2);
+      h_eta_pi_minus_eCAL_95_pfRICH[mom_bin]->Draw("p e same");
+
+
+
 
-        h_eta_scat_ele[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_scat_ele_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
+      TLegend *Leg_bins_anti = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_anti->SetTextFont(42);
+      Leg_bins_anti->AddEntry(h_eta_scat_ele[mom_bin], "Scattered e^{-}");
+      Leg_bins_anti->AddEntry(h_eta_pi_minus[mom_bin], "#pi^{-}");
+      Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_85[mom_bin], "#pi^{-} eCAL 85% eff.");
+      Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_95[mom_bin], "#pi^{-} eCAL 95% eff.");
+      Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin], "#pi^{-} eCAL(85%)+pfRICH");
+      Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_95_pfRICH[mom_bin], "#pi^{-} eCAL(95%)+pfRICH");
+      Leg_bins_anti->SetBorderSize(0);
+      Leg_bins_anti->SetFillColorAlpha(0, 0.01);
+      Leg_bins_anti->Draw("same");
 
+      TPaveText *Text_bins = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_bins->SetTextFont(42);
+      Text_bins->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      if( mom_bin < nMomBins )
+      {
+        Text_bins->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
 
-        h_eta_pi_minus[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
+      Text_bins->SetFillColorAlpha(0, 0.01);
+      Text_bins->Draw("same");
 
-        h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_pfRICH_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
+      eta_scat_ele_pi_minus_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject/Eta_scat_e_vs_pi_minus_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-        h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_eCAL_85_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-        h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_eCAL_95_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
 
-        h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_eCAL_85_pfRICH_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-        h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_pi_minus_eCAL_95_pfRICH_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-
-        h_eta_K_minus[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_K_minus_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-        h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_K_minus_pfRICH_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-
-        h_eta_anti_proton[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_anti_proton_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-        h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_anti_proton_pfRICH_mom_%i_Q2_%i_y_%i", mom_bin , Q2bin, y_bin));
-
-        if(h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Integral() == 0 ) continue;
-        if( h_eta_pi_minus[mom_bin][Q2bin][y_bin]->Integral() < 15 ) continue;
-
-        if(h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Integral() > 0 && h_eta_pi_minus[mom_bin][Q2bin][y_bin]->Integral() > 15)
-        {
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("p e");
 
-          //cout<<h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->GetMaximum()<<endl;
+      TCanvas *eta_scat_ele_pi_minus_pfRICH_can = new TCanvas(Form("eta_scat_ele_pi_minus_pfRICH_can_pfRICH_mom_%i", mom_bin), Form("eta_scat_ele_pi_minus_pfRICH_can_mom_%i", mom_bin), 2000, 1500);
 
-          TCanvas *eta_scat_ele_pi_minus_can = new TCanvas(Form("eta_scat_ele_pi_minus_can_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), Form("eta_scat_ele_pi_minus_can_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), 2000, 1500);
+      eta_scat_ele_pi_minus_pfRICH_can->cd();
 
-          eta_scat_ele_pi_minus_can->cd();
+      gPad->SetLogy();
 
-          gPad->SetLogy();
 
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          //for lin scale
-          //if( h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum() < h_eta_pi_minus[mom_bin][Q2bin][y_bin]->GetMaximum() ) h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(0., h_eta_pi_minus[mom_bin][Q2bin][y_bin]->GetMaximum()*1.7);
-          //else h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(0.5, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum()*1.7);
-          //for log scale
+      if( h_eta_pi_minus_pfRICH[mom_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_pfRICH[mom_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin]->GetMaximum());
+      else if( h_eta_K_minus_pfRICH[mom_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_K_minus_pfRICH[mom_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin]->GetMaximum());
+      else if( h_eta_anti_proton_pfRICH[mom_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_anti_proton_pfRICH[mom_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin]->GetMaximum());
+      else h_eta_scat_ele[mom_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus[mom_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin]->GetMaximum() );
 
-          if(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum() != 0 )
-          {
-            h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-8, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum()*1e8);
-          }
-          else if(h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->GetMaximum() != 0)
-          {
-            h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-8, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum()*1e8);
-          }
-          else
-          {
-            h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-8, h_eta_pi_minus[mom_bin][Q2bin][y_bin]->GetMaximum()*1e10);
-          }
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerColor(kRed);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetLineColor(kRed);
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMinimum(0);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("p e");
 
+      h_eta_scat_ele[mom_bin]->Draw("p e");
 
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(25);
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->Draw("p e same");
 
-          h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->SetMarkerStyle(24);
-          h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->SetMarkerColor(8);
-          h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->SetLineColor(8);
-          h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      h_eta_pi_minus[mom_bin]->Draw("p e same");
 
-          h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
-          h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin]->SetMarkerColor(6);
-          h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin]->SetLineColor(6);
-          h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      h_eta_pi_minus_pfRICH[mom_bin]->SetMarkerStyle(21);
+      h_eta_pi_minus_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_pi_minus_pfRICH[mom_bin]->SetMarkerColor(8);
+      h_eta_pi_minus_pfRICH[mom_bin]->SetLineColor(8);
+      h_eta_pi_minus_pfRICH[mom_bin]->Draw("p e same");
 
-          h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(47);
-          h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(kBlue);
-          h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(kBlue);
-          h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      h_eta_K_minus[mom_bin]->SetMarkerStyle(28);
+      h_eta_K_minus[mom_bin]->SetMarkerSize(2);
+      h_eta_K_minus[mom_bin]->SetMarkerColor(6);
+      h_eta_K_minus[mom_bin]->SetLineColor(6);
+      h_eta_K_minus[mom_bin]->Draw("p e same");
 
-          h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(33);
-          h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(kOrange+2);
-          h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(kOrange+2);
-          h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      h_eta_K_minus_pfRICH[mom_bin]->SetMarkerStyle(34);
+      h_eta_K_minus_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_K_minus_pfRICH[mom_bin]->SetMarkerColor(kBlue);
+      h_eta_K_minus_pfRICH[mom_bin]->SetLineColor(kBlue);
+      h_eta_K_minus_pfRICH[mom_bin]->Draw("p e same");
 
+      h_eta_anti_proton[mom_bin]->SetMarkerStyle(27);
+      h_eta_anti_proton[mom_bin]->SetMarkerSize(2);
+      h_eta_anti_proton[mom_bin]->SetMarkerColor(kOrange+2);
+      h_eta_anti_proton[mom_bin]->SetLineColor(kOrange+2);
+      h_eta_anti_proton[mom_bin]->Draw("p e same");
 
 
+      h_eta_anti_proton_pfRICH[mom_bin]->SetMarkerStyle(33);
+      h_eta_anti_proton_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_anti_proton_pfRICH[mom_bin]->SetMarkerColor(1);
+      h_eta_anti_proton_pfRICH[mom_bin]->SetLineColor(1);
+      h_eta_anti_proton_pfRICH[mom_bin]->Draw("p e same");
 
-          TLegend *Leg_bins_anti = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_anti->SetTextFont(42);
-          Leg_bins_anti->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "Scattered e^{-}");
-          Leg_bins_anti->AddEntry(h_eta_pi_minus[mom_bin][Q2bin][y_bin], "#pi^{-}");
-          Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_85[mom_bin][Q2bin][y_bin], "#pi^{-} eCAL 85% eff.");
-          Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_95[mom_bin][Q2bin][y_bin], "#pi^{-} eCAL 95% eff.");
-          Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_85_pfRICH[mom_bin][Q2bin][y_bin], "#pi^{-} eCAL(85%)+pfRICH");
-          Leg_bins_anti->AddEntry(h_eta_pi_minus_eCAL_95_pfRICH[mom_bin][Q2bin][y_bin], "#pi^{-} eCAL(95%)+pfRICH");
-          Leg_bins_anti->SetBorderSize(0);
-          Leg_bins_anti->SetFillColorAlpha(0, 0.01);
-          Leg_bins_anti->Draw("same");
 
-          TPaveText *Text_bins = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_bins->SetTextFont(42);
-          Text_bins->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          if( mom_bin < nMomBins )
-          {
-            Text_bins->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_bins->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_bins->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
 
-          Text_bins->SetFillColorAlpha(0, 0.01);
-          Text_bins->Draw("same");
 
-          eta_scat_ele_pi_minus_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject/Eta_scat_e_vs_pi_minus_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      TLegend *Leg_bins_anti_pfRICH = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_anti_pfRICH->SetTextFont(42);
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_scat_ele[mom_bin], "Scattered e^{-}");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_pi_minus[mom_bin], "#pi^{-}");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_pi_minus_pfRICH[mom_bin], "#pi^{-} pfRICH");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_K_minus[mom_bin], "K^{-}");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_K_minus_pfRICH[mom_bin], "K^{-} pfRICH");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_anti_proton[mom_bin], "#bar{p}");
+      Leg_bins_anti_pfRICH->AddEntry(h_eta_anti_proton_pfRICH[mom_bin], "#bar{p} pfRICH");
+      Leg_bins_anti_pfRICH->SetBorderSize(0);
+      Leg_bins_anti_pfRICH->SetFillColorAlpha(0, 0.01);
+      Leg_bins_anti_pfRICH->Draw("same");
 
+      Text_bins->Draw("same");
 
+      eta_scat_ele_pi_minus_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject/Eta_scat_e_vs_pi_minus_pfRICH_mom_%i.png", e_energy, p_energy, mom_bin ));
+    }
+    //_____________________________________________________________________________________________________________________
 
-          TCanvas *eta_scat_ele_pi_minus_pfRICH_can = new TCanvas(Form("eta_scat_ele_pi_minus_pfRICH_can_pfRICH_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), Form("eta_scat_ele_pi_minus_pfRICH_can_mom_%i_Q2_%i_yBin_%i", mom_bin , Q2bin, y_bin), 2000, 1500);
 
-          eta_scat_ele_pi_minus_pfRICH_can->cd();
 
-          gPad->SetLogy();
 
+    //reco particles histograms
+    //selection using eCAL
 
-          if( h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum());
-          else if( h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum());
-          else if( h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum() != 0) h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum());
-          else h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetYaxis()->SetRangeUser(h_eta_pi_minus[mom_bin][Q2bin][y_bin]->GetMaximum()*1e-4, h_eta_scat_ele[mom_bin][Q2bin][y_bin]->GetMaximum() );
+    //leading E cluster in eCAL
+    h_eta_scat_ele_RC_eCAL[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_scat_ele_RC_eCAL_mom_%i" , mom_bin));
 
 
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("p e");
+    //background - negative charged particles
+    //h_eta_neg_ch_part_RC[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_neg_ch_part_RC_mom_%i" , mom_bin));
 
+    //mis-PID with eCAL
+    h_scat_ele_purity_eCAL[mom_bin] = (TH1F*)inFile->Get(Form("h_scat_ele_purity_eCAL_mom_%i" , mom_bin));
 
-          h_eta_pi_minus[mom_bin][Q2bin][y_bin]->Draw("p e same");
+    if(h_eta_scat_ele_RC_eCAL[mom_bin]->Integral() > 0)
+    {
 
-          h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(21);
-          h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(8);
-          h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(8);
-          h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      TCanvas *eta_scat_ele_RC_eCAL_can = new TCanvas(Form("eta_scat_ele_RC_eCAL_can_mom_%i" , mom_bin), Form("eta_scat_ele_RC_eCAL_can_%i" , mom_bin), 1200, 1000);
 
-          h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerStyle(28);
-          h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetMarkerColor(6);
-          h_eta_K_minus[mom_bin][Q2bin][y_bin]->SetLineColor(6);
-          h_eta_K_minus[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      eta_scat_ele_RC_eCAL_can->cd();
 
-          h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(34);
-          h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(kBlue);
-          h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(kBlue);
-          h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      gPad->SetLogy();
 
-          h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerStyle(27);
-          h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetMarkerColor(kOrange+2);
-          h_eta_anti_proton[mom_bin][Q2bin][y_bin]->SetLineColor(kOrange+2);
-          h_eta_anti_proton[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      h_eta_scat_ele_RC_eCAL[mom_bin]->GetXaxis()->SetTitle("#eta");
+      h_eta_scat_ele_RC_eCAL[mom_bin]->GetXaxis()->CenterTitle();
+      h_eta_scat_ele_RC_eCAL[mom_bin]->GetYaxis()->SetTitle("Counts");
+      h_eta_scat_ele_RC_eCAL[mom_bin]->GetYaxis()->CenterTitle();
+      h_eta_scat_ele_RC_eCAL[mom_bin]->SetMaximum(h_eta_scat_ele_RC_eCAL[mom_bin]->GetMaximum()*100);
+      h_eta_scat_ele_RC_eCAL[mom_bin]->SetMarkerStyle(20);
+      h_eta_scat_ele_RC_eCAL[mom_bin]->SetMarkerSize(2);
+      h_eta_scat_ele_RC_eCAL[mom_bin]->SetMarkerColor(1);
+      h_eta_scat_ele_RC_eCAL[mom_bin]->SetLineColor(1);
+      //h_eta_scat_ele_RC_eCAL[mom_bin]->SetMinimum(0);
+      h_eta_scat_ele_RC_eCAL[mom_bin]->Draw("p e");
 
 
-          h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(33);
-          h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e same");
+      //h_eta_scat_ele[mom_bin]->SetMarkerSize(1);
+      h_eta_scat_ele[mom_bin]->Draw("same p e ");
 
 
+      TLegend *Leg_bins_RC = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_RC->SetTextFont(42);
+      Leg_bins_RC->AddEntry(h_eta_scat_ele[mom_bin], "MC Scattered e^{-}");
+      Leg_bins_RC->AddEntry(h_eta_scat_ele_RC_eCAL[mom_bin], "Leading E cluster in eCAL");
+      Leg_bins_RC->SetBorderSize(0);
+      Leg_bins_RC->SetFillColorAlpha(0, 0.01);
+      Leg_bins_RC->Draw("same");
 
+      TPaveText *Text_bins_2 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_bins_2->SetTextFont(42);
+      Text_bins_2->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      if( mom_bin < nMomBins )
+      {
+        Text_bins_2->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
 
-          TLegend *Leg_bins_anti_pfRICH = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_anti_pfRICH->SetTextFont(42);
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "Scattered e^{-}");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_pi_minus[mom_bin][Q2bin][y_bin], "#pi^{-}");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_pi_minus_pfRICH[mom_bin][Q2bin][y_bin], "#pi^{-} pfRICH");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_K_minus[mom_bin][Q2bin][y_bin], "K^{-}");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_K_minus_pfRICH[mom_bin][Q2bin][y_bin], "K^{-} pfRICH");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_anti_proton[mom_bin][Q2bin][y_bin], "#bar{p}");
-          Leg_bins_anti_pfRICH->AddEntry(h_eta_anti_proton_pfRICH[mom_bin][Q2bin][y_bin], "#bar{p} pfRICH");
-          Leg_bins_anti_pfRICH->SetBorderSize(0);
-          Leg_bins_anti_pfRICH->SetFillColorAlpha(0, 0.01);
-          Leg_bins_anti_pfRICH->Draw("same");
+      Text_bins_2->SetFillColorAlpha(0, 0.01);
+      Text_bins_2->Draw("same");
 
-          Text_bins->Draw("same");
+      eta_scat_ele_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/Eta_scat_e_RC_eCAL_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-          eta_scat_ele_pi_minus_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject/Eta_scat_e_vs_pi_minus_pfRICH_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
-        }
-        //_____________________________________________________________________________________________________________________
 
+      //scattered electron purity histograms
+      TCanvas *scat_ele_purity_eCAL_can = new TCanvas(Form("scat_ele_purity_eCAL_can_mom_%i" , mom_bin), Form("scat_ele_purity_eCAL_can_mom_%i" , mom_bin), 1200, 1000);
 
+      scat_ele_purity_eCAL_can->cd();
 
+      h_scat_ele_purity_eCAL[mom_bin]->Draw();
 
-        //reco particles histograms
-        //selection using eCAL
+      double nElectrons = h_scat_ele_purity_eCAL[mom_bin]->GetBinContent(2);
+      double nBackground = h_scat_ele_purity_eCAL[mom_bin]->GetBinContent(1);
 
-        //leading E cluster in eCAL
-        h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_scat_ele_RC_eCAL_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
 
+      TPaveText *Text_match = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_match->SetTextFont(42);
+      Text_match->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_match->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
+      if( mom_bin < nMomBins )
+      {
+        Text_match->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
+      Text_match->SetFillColorAlpha(0, 0.01);
+      Text_match->Draw("same");
 
-        //background - negative charged particles
-        //h_eta_neg_ch_part_RC[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_neg_ch_part_RC_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      scat_ele_purity_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/scat_ele_purity_eCAL_can_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-        //mis-PID with eCAL
-        h_scat_ele_purity_eCAL[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_scat_ele_purity_eCAL_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
 
-        if(h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->Integral() > 0)
-        {
+    }//end if integral
+    //_______________________________________________________________________________________________________________________
 
-          TCanvas *eta_scat_ele_RC_eCAL_can = new TCanvas(Form("eta_scat_ele_RC_eCAL_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("eta_scat_ele_RC_eCAL_can_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
 
-          eta_scat_ele_RC_eCAL_can->cd();
+    //reconstructed scattered electron
+    h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_scat_ele_RC_eCAL_E_over_p_mom_%i" , mom_bin));
 
-          gPad->SetLogy();
 
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->GetMaximum()*100);
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          //h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->SetMinimum(0);
-          h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin]->Draw("p e");
+    //background - negative charged particles
+    //h_eta_neg_ch_part_RC[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_neg_ch_part_RC_mom_%i" , mom_bin));
 
+    //mis-PID with eCAL_E_over_p
+    h_scat_ele_purity_eCAL_E_over_p[mom_bin] = (TH1F*)inFile->Get(Form("h_scat_ele_purity_eCAL_E_over_p_mom_%i" , mom_bin));
 
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(1);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("same p e ");
+    if(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->Integral() > 0)
+    {
 
+      TCanvas *eta_scat_ele_RC_eCAL_E_over_p_can = new TCanvas(Form("eta_scat_ele_RC_eCAL_E_over_p_can_mom_%i" , mom_bin), Form("eta_scat_ele_RC_eCAL_E_over_p_can_mom_%i" , mom_bin), 1200, 1000);
 
-          TLegend *Leg_bins_RC = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_RC->SetTextFont(42);
-          Leg_bins_RC->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "MC Scattered e^{-}");
-          Leg_bins_RC->AddEntry(h_eta_scat_ele_RC_eCAL[mom_bin][Q2bin][y_bin], "Leading E cluster in eCAL");
-          Leg_bins_RC->SetBorderSize(0);
-          Leg_bins_RC->SetFillColorAlpha(0, 0.01);
-          Leg_bins_RC->Draw("same");
+      eta_scat_ele_RC_eCAL_E_over_p_can->cd();
 
-          TPaveText *Text_bins_2 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_bins_2->SetTextFont(42);
-          Text_bins_2->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          if( mom_bin < nMomBins )
-          {
-            Text_bins_2->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_bins_2->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_bins_2->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
+      gPad->SetLogy();
 
-          Text_bins_2->SetFillColorAlpha(0, 0.01);
-          Text_bins_2->Draw("same");
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->GetXaxis()->SetTitle("#eta");
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->GetXaxis()->CenterTitle();
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->GetYaxis()->SetTitle("Counts");
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->GetYaxis()->CenterTitle();
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetMaximum(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->GetMaximum()*100);
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetMarkerStyle(20);
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetMarkerSize(2);
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetMarkerColor(1);
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetLineColor(1);
+      //h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->SetMinimum(0);
+      h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin]->Draw("p e");
 
-          eta_scat_ele_RC_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/Eta_scat_e_RC_eCAL_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
 
+      //h_eta_scat_ele[mom_bin]->SetMarkerSize(1);
+      h_eta_scat_ele[mom_bin]->Draw("same p e ");
 
-          //scattered electron purity histograms
-          TCanvas *scat_ele_purity_eCAL_can = new TCanvas(Form("scat_ele_purity_eCAL_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("scat_ele_purity_eCAL_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
 
-          scat_ele_purity_eCAL_can->cd();
+      TLegend *Leg_bins_RC = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_RC->SetTextFont(42);
+      Leg_bins_RC->AddEntry(h_eta_scat_ele[mom_bin], "MC Scattered e^{-}");
+      Leg_bins_RC->AddEntry(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin], "Leading E cluster in eCAL_E_over_p");
+      Leg_bins_RC->SetBorderSize(0);
+      Leg_bins_RC->SetFillColorAlpha(0, 0.01);
+      Leg_bins_RC->Draw("same");
 
-          h_scat_ele_purity_eCAL[mom_bin][Q2bin][y_bin]->Draw();
+      TPaveText *Text_bins_2 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_bins_2->SetTextFont(42);
+      Text_bins_2->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      if( mom_bin < nMomBins )
+      {
+        Text_bins_2->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
 
-          double nElectrons = h_scat_ele_purity_eCAL[mom_bin][Q2bin][y_bin]->GetBinContent(2);
-          double nBackground = h_scat_ele_purity_eCAL[mom_bin][Q2bin][y_bin]->GetBinContent(1);
+      Text_bins_2->SetFillColorAlpha(0, 0.01);
+      Text_bins_2->Draw("same");
 
-          double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
+      eta_scat_ele_RC_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/Eta_scat_e_RC_eCAL_E_over_p_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-          TPaveText *Text_match = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_match->SetTextFont(42);
-          Text_match->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          Text_match->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
-          if( mom_bin < nMomBins )
-          {
-            Text_match->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_match->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_match->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
-          Text_match->SetFillColorAlpha(0, 0.01);
-          Text_match->Draw("same");
 
-          scat_ele_purity_eCAL_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/scat_ele_purity_eCAL_can_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      //scattered electron purity histograms
+      TCanvas *scat_ele_purity_eCAL_E_over_p_can = new TCanvas(Form("scat_ele_purity_eCAL_E_over_p_can_mom_%i" , mom_bin), Form("scat_ele_purity_eCAL_E_over_p_can_mom_%i" , mom_bin), 1200, 1000);
 
+      scat_ele_purity_eCAL_E_over_p_can->cd();
 
-        }//end if integral
-        //_______________________________________________________________________________________________________________________
+      h_scat_ele_purity_eCAL_E_over_p[mom_bin]->Draw();
 
+      double nElectrons = h_scat_ele_purity_eCAL_E_over_p[mom_bin]->GetBinContent(2);
+      double nBackground = h_scat_ele_purity_eCAL_E_over_p[mom_bin]->GetBinContent(1);
 
-        //reconstructed scattered electron
-        h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_scat_ele_RC_eCAL_E_over_p_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
 
+      TPaveText *Text_match = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_match->SetTextFont(42);
+      Text_match->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_match->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
+      if( mom_bin < nMomBins )
+      {
+        Text_match->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
+      Text_match->SetFillColorAlpha(0, 0.01);
+      Text_match->Draw("same");
 
-        //background - negative charged particles
-        //h_eta_neg_ch_part_RC[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_neg_ch_part_RC_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      scat_ele_purity_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/scat_ele_purity_eCAL_E_over_p_can_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-        //mis-PID with eCAL_E_over_p
-        h_scat_ele_purity_eCAL_E_over_p[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_scat_ele_purity_eCAL_E_over_p_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
 
-        if(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->Integral() > 0)
-        {
+    }//end if integral
+    //_______________________________________________________________________________________________________________________
 
-          TCanvas *eta_scat_ele_RC_eCAL_E_over_p_can = new TCanvas(Form("eta_scat_ele_RC_eCAL_E_over_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("eta_scat_ele_RC_eCAL_E_over_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
 
-          eta_scat_ele_RC_eCAL_E_over_p_can->cd();
 
-          gPad->SetLogy();
+    //leading momentum tracks
 
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetMaximum()*100);
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          //h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->SetMinimum(0);
-          h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->Draw("p e");
+    h_eta_scat_ele_RC_lead_p[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_scat_ele_RC_lead_p_mom_%i" , mom_bin));
 
+    //purity of leading momentum sample
+    h_scat_ele_purity_lead_p[mom_bin] = (TH1F*)inFile->Get(Form("h_scat_ele_purity_lead_p_mom_%i" , mom_bin));
 
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(1);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("same p e ");
+    if(h_eta_scat_ele_RC_lead_p[mom_bin]->Integral() > 0)
+    {
+      TCanvas *eta_scat_ele_RC_lead_p_can = new TCanvas(Form("eta_scat_ele_RC_lead_p_can_mom_%i" , mom_bin), Form("eta_scat_ele_RC_lead_p_can_mom_%i" , mom_bin), 1200, 1000);
 
+      eta_scat_ele_RC_lead_p_can->cd();
 
-          TLegend *Leg_bins_RC = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_RC->SetTextFont(42);
-          Leg_bins_RC->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "MC Scattered e^{-}");
-          Leg_bins_RC->AddEntry(h_eta_scat_ele_RC_eCAL_E_over_p[mom_bin][Q2bin][y_bin], "Leading E cluster in eCAL_E_over_p");
-          Leg_bins_RC->SetBorderSize(0);
-          Leg_bins_RC->SetFillColorAlpha(0, 0.01);
-          Leg_bins_RC->Draw("same");
+      gPad->SetLogy();
 
-          TPaveText *Text_bins_2 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_bins_2->SetTextFont(42);
-          Text_bins_2->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          if( mom_bin < nMomBins )
-          {
-            Text_bins_2->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_bins_2->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_bins_2->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
+      h_eta_scat_ele_RC_lead_p[mom_bin]->GetXaxis()->SetTitle("#eta");
+      h_eta_scat_ele_RC_lead_p[mom_bin]->GetXaxis()->CenterTitle();
+      h_eta_scat_ele_RC_lead_p[mom_bin]->GetYaxis()->SetTitle("Counts");
+      h_eta_scat_ele_RC_lead_p[mom_bin]->GetYaxis()->CenterTitle();
+      h_eta_scat_ele_RC_lead_p[mom_bin]->SetMaximum(h_eta_scat_ele_RC_lead_p[mom_bin]->GetMaximum()*500);
+      h_eta_scat_ele_RC_lead_p[mom_bin]->SetMarkerStyle(20);
+      h_eta_scat_ele_RC_lead_p[mom_bin]->SetMarkerSize(2);
+      h_eta_scat_ele_RC_lead_p[mom_bin]->SetMarkerColor(1);
+      h_eta_scat_ele_RC_lead_p[mom_bin]->SetLineColor(1);
+      //h_eta_scat_ele_RC_lead_p[mom_bin]->SetMinimum(0);
+      h_eta_scat_ele_RC_lead_p[mom_bin]->Draw("p e");
 
-          Text_bins_2->SetFillColorAlpha(0, 0.01);
-          Text_bins_2->Draw("same");
 
-          eta_scat_ele_RC_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/Eta_scat_e_RC_eCAL_E_over_p_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      //h_eta_scat_ele[mom_bin]->SetMarkerSize(1);
+      h_eta_scat_ele[mom_bin]->Draw("same p e ");
 
 
-          //scattered electron purity histograms
-          TCanvas *scat_ele_purity_eCAL_E_over_p_can = new TCanvas(Form("scat_ele_purity_eCAL_E_over_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("scat_ele_purity_eCAL_E_over_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
+      TLegend *Leg_bins_RC_lead_p = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_RC_lead_p->SetTextFont(42);
+      Leg_bins_RC_lead_p->AddEntry(h_eta_scat_ele[mom_bin], "MC Scattered e^{-}");
+      Leg_bins_RC_lead_p->AddEntry(h_eta_scat_ele_RC_lead_p[mom_bin], "Lead. p RC particles");
+      Leg_bins_RC_lead_p->SetBorderSize(0);
+      Leg_bins_RC_lead_p->SetFillColorAlpha(0, 0.01);
+      Leg_bins_RC_lead_p->Draw("same");
 
-          scat_ele_purity_eCAL_E_over_p_can->cd();
+      TPaveText *Text_bins_3 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_bins_3->SetTextFont(42);
+      Text_bins_3->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      if( mom_bin < nMomBins )
+      {
+        Text_bins_3->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+      }
 
-          h_scat_ele_purity_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->Draw();
+      Text_bins_3->SetFillColorAlpha(0, 0.01);
+      Text_bins_3->Draw("same");
 
-          double nElectrons = h_scat_ele_purity_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetBinContent(2);
-          double nBackground = h_scat_ele_purity_eCAL_E_over_p[mom_bin][Q2bin][y_bin]->GetBinContent(1);
+      eta_scat_ele_RC_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/Eta_scat_e_RC_lead_p_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-          double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
 
-          TPaveText *Text_match = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_match->SetTextFont(42);
-          Text_match->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          Text_match->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
-          if( mom_bin < nMomBins )
-          {
-            Text_match->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_match->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_match->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
-          Text_match->SetFillColorAlpha(0, 0.01);
-          Text_match->Draw("same");
+      //scattered electron purity histograms
+      TCanvas *scat_ele_purity_lead_p_can = new TCanvas(Form("scat_ele_purity_lead_p_can_mom_%i" , mom_bin), Form("scat_ele_purity_lead_p_can_mom_%i" , mom_bin), 1200, 1000);
 
-          scat_ele_purity_eCAL_E_over_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco/scat_ele_purity_eCAL_E_over_p_can_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      scat_ele_purity_lead_p_can->cd();
 
+      h_scat_ele_purity_lead_p[mom_bin]->Draw();
 
-        }//end if integral
-        //_______________________________________________________________________________________________________________________
+      double nElectrons = h_scat_ele_purity_lead_p[mom_bin]->GetBinContent(2);
+      double nBackground = h_scat_ele_purity_lead_p[mom_bin]->GetBinContent(1);
 
+      double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
 
+      TPaveText *Text_mathc_lead_p = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_mathc_lead_p->SetTextFont(42);
+      Text_mathc_lead_p->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_mathc_lead_p->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
+      if( mom_bin < nMomBins )
+      {
+        Text_mathc_lead_p->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
 
-        //leading momentum tracks
+      }
+      Text_mathc_lead_p->SetFillColorAlpha(0, 0.01);
+      Text_mathc_lead_p->Draw("same");
 
-        h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_scat_ele_RC_lead_p_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      scat_ele_purity_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/scat_ele_purity_lead_p_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-        //purity of leading momentum sample
-        h_scat_ele_purity_lead_p[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_scat_ele_purity_lead_p_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
 
-        if(h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->Integral() > 0)
-        {
-          TCanvas *eta_scat_ele_RC_lead_p_can = new TCanvas(Form("eta_scat_ele_RC_lead_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("eta_scat_ele_RC_lead_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
+    }//end if integral
+    //_______________________________________________________________________________________________________________________
 
-          eta_scat_ele_RC_lead_p_can->cd();
 
-          gPad->SetLogy();
+    //selection using pfRICH
 
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->GetMaximum()*500);
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          //h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->SetMinimum(0);
-          h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin]->Draw("p e");
+    h_eta_scat_ele_RC_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_eta_scat_ele_RC_pfRICH_mom_%i" , mom_bin));
 
+    //mis-PID with eCAL
+    h_scat_ele_purity_pfRICH[mom_bin] = (TH1F*)inFile->Get(Form("h_scat_ele_purity_pfRICH_mom_%i" , mom_bin));
 
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(1);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("same p e ");
+    if(h_eta_scat_ele_RC_pfRICH[mom_bin]->Integral() > 0)
+    {
+      TCanvas *eta_scat_ele_RC_pfRICH_can = new TCanvas(Form("eta_scat_ele_RC_pfRICH_can_mom_%i" , mom_bin), Form("eta_scat_ele_RC_pfRICH_can_mom_%i" , mom_bin), 1200, 1000);
 
+      eta_scat_ele_RC_pfRICH_can->cd();
 
-          TLegend *Leg_bins_RC_lead_p = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_RC_lead_p->SetTextFont(42);
-          Leg_bins_RC_lead_p->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "MC Scattered e^{-}");
-          Leg_bins_RC_lead_p->AddEntry(h_eta_scat_ele_RC_lead_p[mom_bin][Q2bin][y_bin], "Lead. p RC particles");
-          Leg_bins_RC_lead_p->SetBorderSize(0);
-          Leg_bins_RC_lead_p->SetFillColorAlpha(0, 0.01);
-          Leg_bins_RC_lead_p->Draw("same");
+      gPad->SetLogy();
 
-          TPaveText *Text_bins_3 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_bins_3->SetTextFont(42);
-          Text_bins_3->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          if( mom_bin < nMomBins )
-          {
-            Text_bins_3->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_bins_3->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_bins_3->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->GetXaxis()->SetTitle("#eta");
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->GetXaxis()->CenterTitle();
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->GetYaxis()->SetTitle("Counts");
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->GetYaxis()->CenterTitle();
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->SetMaximum(h_eta_scat_ele_RC_pfRICH[mom_bin]->GetMaximum()*500);
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->SetMarkerStyle(20);
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->SetMarkerSize(2);
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->SetMarkerColor(1);
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->SetLineColor(1);
+      //h_eta_scat_ele_RC_pfRICH[mom_bin]->SetMinimum(0);
+      h_eta_scat_ele_RC_pfRICH[mom_bin]->Draw("p e");
 
-          Text_bins_3->SetFillColorAlpha(0, 0.01);
-          Text_bins_3->Draw("same");
 
-          eta_scat_ele_RC_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/Eta_scat_e_RC_lead_p_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      //h_eta_scat_ele[mom_bin]->SetMarkerSize(1);
+      h_eta_scat_ele[mom_bin]->Draw("same p e ");
 
 
-          //scattered electron purity histograms
-          TCanvas *scat_ele_purity_lead_p_can = new TCanvas(Form("scat_ele_purity_lead_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("scat_ele_purity_lead_p_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
+      TLegend *Leg_bins_RC_pfRICH = new TLegend(0.2, 0.63, 0.54, 0.85 );
+      Leg_bins_RC_pfRICH->SetTextFont(42);
+      Leg_bins_RC_pfRICH->AddEntry(h_eta_scat_ele[mom_bin], "MC Scattered e^{-}");
+      Leg_bins_RC_pfRICH->AddEntry(h_eta_scat_ele_RC_pfRICH[mom_bin], "RC Scattered e^{-}");
+      Leg_bins_RC_pfRICH->SetBorderSize(0);
+      Leg_bins_RC_pfRICH->SetFillColorAlpha(0, 0.01);
+      Leg_bins_RC_pfRICH->Draw("same");
 
-          scat_ele_purity_lead_p_can->cd();
+      TPaveText *Text_bins_3 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_bins_3->SetTextFont(42);
+      Text_bins_3->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      if( mom_bin < nMomBins )
+      {
+        Text_bins_3->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
 
-          h_scat_ele_purity_lead_p[mom_bin][Q2bin][y_bin]->Draw();
+      }
 
-          double nElectrons = h_scat_ele_purity_lead_p[mom_bin][Q2bin][y_bin]->GetBinContent(2);
-          double nBackground = h_scat_ele_purity_lead_p[mom_bin][Q2bin][y_bin]->GetBinContent(1);
+      Text_bins_3->SetFillColorAlpha(0, 0.01);
+      Text_bins_3->Draw("same");
 
-          double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
+      eta_scat_ele_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/Eta_scat_e_RC_pfRICH_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-          TPaveText *Text_mathc_lead_p = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_mathc_lead_p->SetTextFont(42);
-          Text_mathc_lead_p->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          Text_mathc_lead_p->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
-          if( mom_bin < nMomBins )
-          {
-            Text_mathc_lead_p->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_mathc_lead_p->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_mathc_lead_p->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
-          Text_mathc_lead_p->SetFillColorAlpha(0, 0.01);
-          Text_mathc_lead_p->Draw("same");
 
-          scat_ele_purity_lead_p_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/scat_ele_purity_lead_p_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
+      //scattered electron purity histograms
+      TCanvas *scat_ele_purity_pfRICH_can = new TCanvas(Form("scat_ele_purity_pfRICH_can_mom_%i" , mom_bin), Form("scat_ele_purity_pfRICH_can_mom_%i" , mom_bin), 1200, 1000);
 
+      scat_ele_purity_pfRICH_can->cd();
 
-        }//end if integral
-        //_______________________________________________________________________________________________________________________
+      h_scat_ele_purity_pfRICH[mom_bin]->Draw();
 
+      double nElectrons = h_scat_ele_purity_pfRICH[mom_bin]->GetBinContent(2);
+      double nBackground = h_scat_ele_purity_pfRICH[mom_bin]->GetBinContent(1);
 
-        //selection using pfRICH
+      double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
 
-        h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_eta_scat_ele_RC_pfRICH_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      TPaveText *Text_mathc_pfRICH = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_mathc_pfRICH->SetTextFont(42);
+      Text_mathc_pfRICH->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_mathc_pfRICH->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
+      if( mom_bin < nMomBins )
+      {
+        Text_mathc_pfRICH->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
 
-        //mis-PID with eCAL
-        h_scat_ele_purity_pfRICH[mom_bin][Q2bin][y_bin] = (TH1D*)inFile->Get(Form("h_scat_ele_purity_pfRICH_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin));
+      }
+      Text_mathc_pfRICH->SetFillColorAlpha(0, 0.01);
+      Text_mathc_pfRICH->Draw("same");
 
-        if(h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->Integral() > 0)
-        {
-          TCanvas *eta_scat_ele_RC_pfRICH_can = new TCanvas(Form("eta_scat_ele_RC_pfRICH_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("eta_scat_ele_RC_pfRICH_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
+      scat_ele_purity_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/scat_ele_purity_pfRICH_mom_%i.png", e_energy, p_energy, mom_bin ));
 
-          eta_scat_ele_RC_pfRICH_can->cd();
 
-          gPad->SetLogy();
+    }//end if integral
+    //_______________________________________________________________________________________________________________________
 
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetXaxis()->CenterTitle();
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetYaxis()->CenterTitle();
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMaximum(h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->GetMaximum()*500);
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerStyle(20);
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerSize(2);
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMarkerColor(1);
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetLineColor(1);
-          //h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->SetMinimum(0);
-          h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin]->Draw("p e");
-
-
-          //h_eta_scat_ele[mom_bin][Q2bin][y_bin]->SetMarkerSize(1);
-          h_eta_scat_ele[mom_bin][Q2bin][y_bin]->Draw("same p e ");
-
-
-          TLegend *Leg_bins_RC_pfRICH = new TLegend(0.2, 0.63, 0.54, 0.85 );
-          Leg_bins_RC_pfRICH->SetTextFont(42);
-          Leg_bins_RC_pfRICH->AddEntry(h_eta_scat_ele[mom_bin][Q2bin][y_bin], "MC Scattered e^{-}");
-          Leg_bins_RC_pfRICH->AddEntry(h_eta_scat_ele_RC_pfRICH[mom_bin][Q2bin][y_bin], "RC Scattered e^{-}");
-          Leg_bins_RC_pfRICH->SetBorderSize(0);
-          Leg_bins_RC_pfRICH->SetFillColorAlpha(0, 0.01);
-          Leg_bins_RC_pfRICH->Draw("same");
-
-          TPaveText *Text_bins_3 = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_bins_3->SetTextFont(42);
-          Text_bins_3->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          if( mom_bin < nMomBins )
-          {
-            Text_bins_3->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_bins_3->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_bins_3->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
-
-          Text_bins_3->SetFillColorAlpha(0, 0.01);
-          Text_bins_3->Draw("same");
-
-          eta_scat_ele_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/Eta_scat_e_RC_pfRICH_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
-
-
-          //scattered electron purity histograms
-          TCanvas *scat_ele_purity_pfRICH_can = new TCanvas(Form("scat_ele_purity_pfRICH_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), Form("scat_ele_purity_pfRICH_can_mom_%i_Q2_%i_y_%i" , mom_bin, Q2bin, y_bin), 1200, 1000);
-
-          scat_ele_purity_pfRICH_can->cd();
-
-          h_scat_ele_purity_pfRICH[mom_bin][Q2bin][y_bin]->Draw();
-
-          double nElectrons = h_scat_ele_purity_pfRICH[mom_bin][Q2bin][y_bin]->GetBinContent(2);
-          double nBackground = h_scat_ele_purity_pfRICH[mom_bin][Q2bin][y_bin]->GetBinContent(1);
-
-          double e_purity = ( nElectrons/(nElectrons+nBackground) )*100;
-
-          TPaveText *Text_mathc_pfRICH = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
-          Text_mathc_pfRICH->SetTextFont(42);
-          Text_mathc_pfRICH->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
-          Text_mathc_pfRICH->AddText(Form("Scat. e purity: %0.1f%%", e_purity));
-          if( mom_bin < nMomBins )
-          {
-            Text_mathc_pfRICH->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
-            Text_mathc_pfRICH->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
-            Text_mathc_pfRICH->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
-          }
-          Text_mathc_pfRICH->SetFillColorAlpha(0, 0.01);
-          Text_mathc_pfRICH->Draw("same");
-
-          scat_ele_purity_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/scat_ele_purity_pfRICH_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
-
-
-        }//end if integral
-        //_______________________________________________________________________________________________________________________
-
-
-      }//end for y bins
-    }//end for Q2 bins
   }//end for mom bins
 
 
@@ -1033,7 +984,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     gPad->SetLogy();
 
-    h_p_scat_ele[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_eta_%i", eta_bin));
+    h_p_scat_ele[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_eta_%i", eta_bin));
     h_p_scat_ele[eta_bin]->Sumw2();
     h_p_scat_ele[eta_bin]->GetXaxis()->SetTitle("p_{MC} (GeV)/#it{c}");
     h_p_scat_ele[eta_bin]->GetXaxis()->CenterTitle();
@@ -1045,7 +996,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele[eta_bin]->SetLineColor(kRed);
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_pi_minus[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eta_%i", eta_bin));
+    h_p_pi_minus[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_eta_%i", eta_bin));
     h_p_pi_minus[eta_bin]->Sumw2();
     h_p_pi_minus[eta_bin]->SetMarkerStyle(25);
     h_p_pi_minus[eta_bin]->SetMarkerSize(2);
@@ -1065,7 +1016,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_eCAL_85[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_85_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_85[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_eCAL_85_eta_%i", eta_bin));
     h_p_pi_minus_eCAL_85[eta_bin]->Sumw2();
     h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerStyle(24);
     h_p_pi_minus_eCAL_85[eta_bin]->SetMarkerSize(2);
@@ -1073,7 +1024,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_85[eta_bin]->SetLineColor(8);
     h_p_pi_minus_eCAL_85[eta_bin]->Draw("p e same");
 
-    h_p_pi_minus_eCAL_95[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_95_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_95[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_eCAL_95_eta_%i", eta_bin));
     h_p_pi_minus_eCAL_95[eta_bin]->Sumw2();
     h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerStyle(28);
     h_p_pi_minus_eCAL_95[eta_bin]->SetMarkerSize(2);
@@ -1094,7 +1045,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele[eta_bin]->GetXaxis()->SetRangeUser(0, 5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_pfRICH[eta_bin]->SetMarkerStyle(21);
     h_p_pi_minus_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1114,7 +1065,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_eCAL_85_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_85_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_85_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_eCAL_85_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(24);
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1123,7 +1074,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_eCAL_85_pfRICH[eta_bin]->Draw("p e same");
 
 
-    h_p_pi_minus_eCAL_95_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_eCAL_95_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_eCAL_95_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_eCAL_95_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(28);
     h_p_pi_minus_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1253,7 +1204,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele[eta_bin]->Draw("p e");
 
     //leading cluster tracks from eCAL
-    h_p_scat_ele_RC_eCAL[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_eta_%i", eta_bin));
+    h_p_scat_ele_RC_eCAL[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_eta_%i", eta_bin));
     h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerStyle(20);
     h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerSize(2);
     h_p_scat_ele_RC_eCAL[eta_bin]->SetMarkerColor(1);
@@ -1274,7 +1225,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele[eta_bin]->Draw("p e");
 
     //leading cluster tracks from eCAL with E/p cut
-    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_E_over_p_eta_%i", eta_bin));
+    h_p_scat_ele_RC_eCAL_E_over_p[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_RC_eCAL_E_over_p_eta_%i", eta_bin));
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerStyle(20);
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerSize(2);
     h_p_scat_ele_RC_eCAL_E_over_p[eta_bin]->SetMarkerColor(1);
@@ -1296,7 +1247,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     //MC scattered e
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_scat_ele_RC_lead_p[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_lead_p_eta_%i", eta_bin));
+    h_p_scat_ele_RC_lead_p[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_RC_lead_p_eta_%i", eta_bin));
     h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerStyle(20);
     h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerSize(2);
     h_p_scat_ele_RC_lead_p[eta_bin]->SetMarkerColor(1);
@@ -1318,7 +1269,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele[eta_bin]->Draw("p e");
 
-    h_p_scat_ele_RC_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_RC_pfRICH_eta_%i", eta_bin));
+    h_p_scat_ele_RC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_RC_pfRICH_eta_%i", eta_bin));
     h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerStyle(20);
     h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerSize(2);
     h_p_scat_ele_RC_pfRICH[eta_bin]->SetMarkerColor(1);
@@ -1337,7 +1288,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     gPad->SetLogy();
 
-    h_p_scat_ele_MC_RC[eta_bin] = (TH1D*)inFile->Get(Form("h_p_scat_ele_MC_RC_eta_%i", eta_bin));
+    h_p_scat_ele_MC_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_scat_ele_MC_RC_eta_%i", eta_bin));
     h_p_scat_ele_MC_RC[eta_bin]->Sumw2();
     h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->SetTitle("p_{RC} (GeV)/#it{c}");
     h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->CenterTitle();
@@ -1349,7 +1300,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_MC_RC[eta_bin]->SetLineColor(kRed);
     h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_MC_RC[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC[eta_bin]->SetMarkerStyle(25);
     h_p_pi_minus_MC_RC[eta_bin]->SetMarkerSize(2);
@@ -1375,7 +1326,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_MC_RC_eCAL_85[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_85[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerStyle(24);
     h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetMarkerSize(2);
@@ -1383,7 +1334,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->SetLineColor(8);
     h_p_pi_minus_MC_RC_eCAL_85[eta_bin]->Draw("p e same");
 
-    h_p_pi_minus_MC_RC_eCAL_95[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_95[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerStyle(28);
     h_p_pi_minus_MC_RC_eCAL_95[eta_bin]->SetMarkerSize(2);
@@ -1404,7 +1355,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_scat_ele_MC_RC[eta_bin]->GetXaxis()->SetRangeUser(0,5); //for pfRICH plots, e/pi table only for p < 5 GeV/c
     h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_MC_RC_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerStyle(21);
     h_p_pi_minus_MC_RC_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1424,7 +1375,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
 
     h_p_scat_ele_MC_RC[eta_bin]->Draw("p e");
 
-    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_85_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerStyle(24);
     h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1433,7 +1384,7 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     h_p_pi_minus_MC_RC_eCAL_85_pfRICH[eta_bin]->Draw("p e same");
 
 
-    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin] = (TH1D*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_pfRICH_eta_%i", eta_bin));
+    h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_pi_minus_MC_RC_eCAL_95_pfRICH_eta_%i", eta_bin));
     h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->Sumw2();
     h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerStyle(28);
     h_p_pi_minus_MC_RC_eCAL_95_pfRICH[eta_bin]->SetMarkerSize(2);
@@ -1518,6 +1469,31 @@ void Plot_histos_pi_rejection(int e_energy = 18, int p_energy = 275)
     Text_eta_bins->Draw("same");
 
     p_pi_over_scat_ele_MC_RC_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_pfRICH_eta_%i.png", e_energy, p_energy, eta_bin));
+
+
+    TCanvas *p_pi_over_scat_ele_MC_RC_pfRICH_compare_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_pfRICH_compare_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_pfRICH_compare_can_eta_%i", eta_bin), 1200, 1000);
+    p_pi_over_scat_ele_MC_RC_pfRICH_compare_can->cd();
+
+    gPad->SetLogy();
+
+    h_p_pi_minus_MC_RC[eta_bin]->GetXaxis()->SetRangeUser(0,5);
+    h_p_pi_minus_MC_RC[eta_bin]->SetMaximum(h_p_pi_minus_MC_RC[eta_bin]->GetMaximum()*10 );
+    h_p_pi_minus_MC_RC[eta_bin]->SetMinimum(1e-2 );
+    h_p_pi_minus_MC_RC[eta_bin]->SetMarkerStyle(25);
+    h_p_pi_minus_MC_RC[eta_bin]->Draw("p e");
+
+    h_p_pi_minus_MC_RC_pfRICH[eta_bin]->Draw("p e same");
+
+    Text_eta_bins->Draw("same");
+
+    TLegend *pfRICH_ratio_leg = new TLegend(0.65, 0.75, 0.89, 0.85);
+    pfRICH_ratio_leg->AddEntry(h_p_pi_minus_MC_RC[eta_bin], "All MC tracks");
+    pfRICH_ratio_leg->AddEntry(h_p_pi_minus_MC_RC_pfRICH[eta_bin], "With pfRICH");
+    pfRICH_ratio_leg->SetBorderSize(0);
+    pfRICH_ratio_leg->SetFillColorAlpha(0, 0.01);
+    pfRICH_ratio_leg->Draw("same");
+
+    p_pi_over_scat_ele_MC_RC_pfRICH_compare_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/pi_reject_reco_pfRICH/p_pi_over_scat_ele_MC_RC_pfRICH_compare_eta_%i.png", e_energy, p_energy, eta_bin));
 
 
     TCanvas *p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can = new TCanvas(Form("p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), Form("p_pi_over_scat_ele_MC_RC_pfRICH_eCAL_can_eta_%i", eta_bin), 1200, 1000);

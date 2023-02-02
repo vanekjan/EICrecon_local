@@ -50,11 +50,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
     return;
   }
 
-
   gStyle->SetOptStat(0);
   gStyle->SetOptTitle(0);
-
-
 
   const int nQ2bins = 4;
   float const Q2_bins[nQ2bins+1] = { 1,3,5,10,20 };
@@ -65,11 +62,19 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
   const int nMomBins = 11;
   float const mom_bins[nMomBins+1] = { 0,0.5,1,1.5,2,3,4,5,6,7,10, 18 };
 
+
+  //pfRICH eta acceptance mc_mom.Eta() > -3.8 && mc_mom.Eta() < -1.5
+  const int nEtaBins = 4;
+  float const eta_bins[nEtaBins+1] = { -3.8, -3, -2.5, -2, -1.5};
+
   //load all files
   TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i-output.root", e_energy, p_energy, e_energy, p_energy), "READ");
   //TFile *inFile = new TFile(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/input/%ix%i/DIS_%ix%i_p_scat_bins-output.root", e_energy, p_energy, e_energy, p_energy), "READ");
 
   TH1D *h_K_MC_RC_match_pfRICH[nMomBins][nQ2bins][nyInelParBins];
+
+  TH1D *h_K_purity_p_eta_pfRICH_MC[nMomBins][nEtaBins+1];
+  TH1D *h_K_purity_p_eta_pfRICH_RC[nMomBins][nEtaBins+1];
 
   for(unsigned int mom_bin = 0; mom_bin < nMomBins; mom_bin++)
   {
@@ -107,6 +112,80 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         K_MC_RC_match_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_purity_pfRICH_mom_%i_Q2_%i_yBin_%i.png", e_energy, p_energy, mom_bin , Q2bin, y_bin));
       }
     }
+
+
+    for(unsigned int eta_bin = 0; eta_bin < nEtaBins+1; eta_bin++)
+    {
+
+      h_K_purity_p_eta_pfRICH_MC[mom_bin][eta_bin] = (TH1D*)inFile->Get(Form("h_K_purity_p_eta_pfRICH_MC_mom_%i_eta_%i" , mom_bin, eta_bin));
+
+      if(h_K_purity_p_eta_pfRICH_MC[mom_bin][eta_bin]->Integral() != 0)
+      {
+        TCanvas *K_purity_pfRICH_MC_can = new TCanvas(Form("K_purity_pfRICH_MC_can_mom_%i_eta_%i" , mom_bin, eta_bin), Form("K_purity_pfRICH_MC_can_mom_%i_eta_%i" , mom_bin, eta_bin), 1200, 1000);
+
+        K_purity_pfRICH_MC_can->cd();
+
+        h_K_purity_p_eta_pfRICH_MC[mom_bin][eta_bin]->Draw();
+
+        double nK = h_K_purity_p_eta_pfRICH_MC[mom_bin][eta_bin]->GetBinContent(2);
+        double nBackground = h_K_purity_p_eta_pfRICH_MC[mom_bin][eta_bin]->GetBinContent(1);
+
+        double K_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_mathc_pfRICH_MC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_mathc_pfRICH_MC->SetTextFont(42);
+        Text_mathc_pfRICH_MC->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_mathc_pfRICH_MC->AddText(Form("K pfRICH purity: %0.1f%%", K_purity));
+        if( mom_bin < nMomBins )
+        {
+          Text_mathc_pfRICH_MC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+          if(eta_bin < nEtaBins) Text_mathc_pfRICH_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+          else Text_mathc_pfRICH_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+
+        }
+        Text_mathc_pfRICH_MC->SetFillColorAlpha(0, 0.01);
+        Text_mathc_pfRICH_MC->Draw("same");
+
+        K_purity_pfRICH_MC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_purity_pfRICH_MC_mom_%i_eta_%i.png", e_energy, p_energy, mom_bin , eta_bin));
+
+      }
+
+
+      h_K_purity_p_eta_pfRICH_RC[mom_bin][eta_bin] = (TH1D*)inFile->Get(Form("h_K_purity_p_eta_pfRICH_RC_mom_%i_eta_%i" , mom_bin, eta_bin));
+
+      if(h_K_purity_p_eta_pfRICH_RC[mom_bin][eta_bin]->Integral() != 0 )
+      {
+        TCanvas *K_purity_pfRICH_RC_can = new TCanvas(Form("K_purity_pfRICH_RC_can_mom_%i_eta_%i" , mom_bin, eta_bin), Form("K_purity_pfRICH_RC_can_mom_%i_eta_%i" , mom_bin, eta_bin), 1200, 1000);
+
+        K_purity_pfRICH_RC_can->cd();
+
+        h_K_purity_p_eta_pfRICH_RC[mom_bin][eta_bin]->Draw();
+
+        double nK = h_K_purity_p_eta_pfRICH_RC[mom_bin][eta_bin]->GetBinContent(2);
+        double nBackground = h_K_purity_p_eta_pfRICH_RC[mom_bin][eta_bin]->GetBinContent(1);
+
+        double K_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_mathc_pfRICH_RC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_mathc_pfRICH_RC->SetTextFont(42);
+        Text_mathc_pfRICH_RC->AddText(Form("RC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_mathc_pfRICH_RC->AddText(Form("K pfRICH purity: %0.1f%%", K_purity));
+        if( mom_bin < nMomBins )
+        {
+          Text_mathc_pfRICH_RC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins[mom_bin], mom_bins[mom_bin+1]));
+          if(eta_bin < nEtaBins) Text_mathc_pfRICH_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[mom_bin], eta_bins[mom_bin+1]));
+          else Text_mathc_pfRICH_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+
+        }
+        Text_mathc_pfRICH_RC->SetFillColorAlpha(0, 0.01);
+        Text_mathc_pfRICH_RC->Draw("same");
+
+        K_purity_pfRICH_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_purity_pfRICH_RC_mom_%i_eta_%i.png", e_energy, p_energy, mom_bin , eta_bin));
+
+      }
+    }
+
+
   }
 
 
