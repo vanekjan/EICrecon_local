@@ -82,6 +82,12 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
   TH1F *h_p_K_plus_MC_pfRICH[nEtaBins+1];
   TH1F *h_p_K_minus_MC_pfRICH[nEtaBins+1];
 
+  TH1F *h_eta_K_plus_lead_MC_pfRICH[nQ2bins][nyInelParBins];
+  TH1F *h_eta_K_minus_lead_MC_pfRICH[nQ2bins][nyInelParBins];
+
+  TH1F *h_p_K_plus_lead_MC_pfRICH[nEtaBins+1];
+  TH1F *h_p_K_minus_lead_MC_pfRICH[nEtaBins+1];
+
 
   //K purity
   TH1F *h_K_minus_purity_pfRICH_MC[nQ2bins][nyInelParBins];
@@ -89,6 +95,12 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
   TH1F *h_K_plus_purity_pfRICH_MC[nQ2bins][nyInelParBins];
   TH1F *h_K_plus_purity_p_eta_pfRICH_MC[nEtaBins+1];
+
+  TH1F *h_K_minus_lead_purity_pfRICH_MC[nQ2bins][nyInelParBins];
+  TH1F *h_K_minus_lead_purity_p_eta_pfRICH_MC[nEtaBins+1];
+
+  TH1F *h_K_plus_lead_purity_pfRICH_MC[nQ2bins][nyInelParBins];
+  TH1F *h_K_plus_lead_purity_p_eta_pfRICH_MC[nEtaBins+1];
 
 
   //RC histograms
@@ -98,6 +110,12 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
   TH1F *h_p_K_plus_RC[nEtaBins+1];
   TH1F *h_p_K_minus_RC[nEtaBins+1];
 
+  TH1F *h_eta_K_plus_lead_RC[nQ2bins][nyInelParBins];
+  TH1F *h_eta_K_minus_lead_RC[nQ2bins][nyInelParBins];
+
+  TH1F *h_p_K_plus_lead_RC[nEtaBins+1];
+  TH1F *h_p_K_minus_lead_RC[nEtaBins+1];
+
 
   TH1F *h_eta_K_plus_RC_pfRICH[nQ2bins][nyInelParBins];
   TH1F *h_eta_K_minus_RC_pfRICH[nQ2bins][nyInelParBins];
@@ -105,11 +123,24 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
   TH1F *h_p_K_plus_RC_pfRICH[nEtaBins+1];
   TH1F *h_p_K_minus_RC_pfRICH[nEtaBins+1];
 
+  TH1F *h_eta_K_plus_lead_RC_pfRICH[nQ2bins][nyInelParBins];
+  TH1F *h_eta_K_minus_lead_RC_pfRICH[nQ2bins][nyInelParBins];
+
+  TH1F *h_p_K_plus_lead_RC_pfRICH[nEtaBins+1];
+  TH1F *h_p_K_minus_lead_RC_pfRICH[nEtaBins+1];
+
+
   TH1F *h_K_minus_purity_pfRICH_RC[nQ2bins][nyInelParBins];
   TH1F *h_K_minus_purity_p_eta_pfRICH_RC[nEtaBins+1];
 
   TH1F *h_K_plus_purity_pfRICH_RC[nQ2bins][nyInelParBins];
   TH1F *h_K_plus_purity_p_eta_pfRICH_RC[nEtaBins+1];
+
+  TH1F *h_K_minus_lead_purity_pfRICH_RC[nQ2bins][nyInelParBins];
+  TH1F *h_K_minus_lead_purity_p_eta_pfRICH_RC[nEtaBins+1];
+
+  TH1F *h_K_plus_lead_purity_pfRICH_RC[nQ2bins][nyInelParBins];
+  TH1F *h_K_plus_lead_purity_p_eta_pfRICH_RC[nEtaBins+1];
 
 
 
@@ -165,7 +196,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
       //leading K-
       h_eta_K_minus_lead_MC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_lead_MC_Q2_%i_y_%i" , Q2bin, y_bin));
-      //h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_lead_MC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
+      h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_lead_MC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
 
       if( h_eta_K_minus_lead_MC[Q2bin][y_bin]->Integral() > 0 )
       {
@@ -184,7 +215,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         h_eta_K_minus_lead_MC[Q2bin][y_bin]->SetLineColor(4);
         h_eta_K_minus_lead_MC[Q2bin][y_bin]->Draw("p e");
 
-/*
+
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->GetXaxis()->CenterTitle();
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
@@ -193,7 +224,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->SetMarkerColor(8);
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->SetLineColor(8);
         h_eta_K_minus_lead_MC_pfRICH[Q2bin][y_bin]->Draw("p e same");
-*/
+
         Text_K_MC->Draw("same");
 
         K_minus_lead_eta_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_eta_Q2_%i_y_%i.png" ,e_energy, p_energy, Q2bin, y_bin));
@@ -242,7 +273,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
       //leading K+
       h_eta_K_plus_lead_MC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_plus_lead_MC_Q2_%i_y_%i" , Q2bin, y_bin));
-      //h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_plus_lead_MC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
+      h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_plus_lead_MC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
 
       if( h_eta_K_plus_lead_MC[Q2bin][y_bin]->Integral() > 0 )
       {
@@ -261,7 +292,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         h_eta_K_plus_lead_MC[Q2bin][y_bin]->SetLineColor(4);
         h_eta_K_plus_lead_MC[Q2bin][y_bin]->Draw("p e");
 
-/*
+
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->GetXaxis()->CenterTitle();
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
@@ -270,7 +301,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->SetMarkerColor(8);
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->SetLineColor(8);
         h_eta_K_plus_lead_MC_pfRICH[Q2bin][y_bin]->Draw("p e same");
-*/
+
         Text_K_MC->Draw("same");
 
         K_plus_lead_eta_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_eta_Q2_%i_y_%i.png" ,e_energy, p_energy, Q2bin, y_bin));
@@ -312,8 +343,40 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
       }
 
+      //leading K-
+      h_K_minus_lead_purity_pfRICH_MC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_minus_lead_purity_pfRICH_MC_Q2_%i_y_%i" , Q2bin, y_bin));
 
-      //K-
+
+      if( h_K_minus_lead_purity_pfRICH_MC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_minus_lead_purity_pfRICH_can = new TCanvas(Form("K_minus_lead_purity_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_minus_lead_purity_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+
+        K_minus_lead_purity_pfRICH_can->cd();
+
+
+        h_K_minus_lead_purity_pfRICH_MC[Q2bin][y_bin]->Draw();
+
+        double nK = h_K_minus_lead_purity_pfRICH_MC[Q2bin][y_bin]->GetBinContent(2);
+        double nBackground = h_K_minus_lead_purity_pfRICH_MC[Q2bin][y_bin]->GetBinContent(1);
+
+        double K_lead_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_K_minus_lead_purity = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_K_minus_lead_purity->SetTextFont(42);
+        Text_K_minus_lead_purity->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_K_minus_lead_purity->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_lead_purity));
+        //Text_K_minus_lead_purity->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+        Text_K_minus_lead_purity->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
+        Text_K_minus_lead_purity->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
+        Text_K_minus_lead_purity->SetFillColorAlpha(0, 0.01);
+        Text_K_minus_lead_purity->Draw("same");
+
+        K_minus_lead_purity_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_purity_pfRICH_MC_Q2_%i_yBin_%i.png", e_energy, p_energy, Q2bin, y_bin));
+
+      }
+
+
+      //K+
       h_K_plus_purity_pfRICH_MC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_plus_purity_pfRICH_MC_Q2_%i_y_%i" , Q2bin, y_bin));
 
       if( h_K_plus_purity_pfRICH_MC[Q2bin][y_bin]->Integral() > 0 )
@@ -341,6 +404,39 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         Text_K_plus_purity->Draw("same");
 
         K_plus_purity_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_purity_pfRICH_MC_Q2_%i_yBin_%i.png", e_energy, p_energy , Q2bin, y_bin));
+
+      }
+
+
+      //leading K+
+      h_K_plus_lead_purity_pfRICH_MC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_plus_lead_purity_pfRICH_MC_Q2_%i_y_%i" , Q2bin, y_bin));
+
+
+      if( h_K_plus_lead_purity_pfRICH_MC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_plus_lead_purity_pfRICH_can = new TCanvas(Form("K_plus_lead_purity_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_plus_lead_purity_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+
+        K_plus_lead_purity_pfRICH_can->cd();
+
+
+        h_K_plus_lead_purity_pfRICH_MC[Q2bin][y_bin]->Draw();
+
+        double nK = h_K_plus_lead_purity_pfRICH_MC[Q2bin][y_bin]->GetBinContent(2);
+        double nBackground = h_K_plus_lead_purity_pfRICH_MC[Q2bin][y_bin]->GetBinContent(1);
+
+        double K_lead_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_K_plus_lead_purity = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_K_plus_lead_purity->SetTextFont(42);
+        Text_K_plus_lead_purity->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_K_plus_lead_purity->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_lead_purity));
+        //Text_K_plus_lead_purity->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+        Text_K_plus_lead_purity->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
+        Text_K_plus_lead_purity->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
+        Text_K_plus_lead_purity->SetFillColorAlpha(0, 0.01);
+        Text_K_plus_lead_purity->Draw("same");
+
+        K_plus_lead_purity_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_purity_pfRICH_MC_Q2_%i_yBin_%i.png", e_energy, p_energy, Q2bin, y_bin));
 
       }
 
@@ -392,6 +488,45 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         K_minus_eta_pfRICH_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_RC_eta_Q2_%i_y_%i.png" ,e_energy, p_energy, Q2bin, y_bin));
 
       }
+
+
+      //leading K-
+      h_eta_K_minus_lead_RC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_lead_MC_RC_Q2_%i_y_%i" , Q2bin, y_bin));
+      h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_minus_lead_MC_RC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
+
+      if( h_eta_K_minus_lead_RC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_minus_eta_pfRICH_lead_RC_can = new TCanvas(Form("K_minus_eta_pfRICH_lead_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_minus_eta_pfRICH_lead_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+        K_minus_eta_pfRICH_lead_RC_can->cd();
+
+        gPad->SetLogy();
+
+
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->GetXaxis()->CenterTitle();
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->GetYaxis()->CenterTitle();
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->SetMarkerStyle(28);
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->SetMarkerColor(4);
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->SetLineColor(4);
+        h_eta_K_minus_lead_RC[Q2bin][y_bin]->Draw("p e");
+
+
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->GetXaxis()->CenterTitle();
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->GetYaxis()->CenterTitle();
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->SetMarkerStyle(34);
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->SetMarkerColor(8);
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->SetLineColor(8);
+        h_eta_K_minus_lead_RC_pfRICH[Q2bin][y_bin]->Draw("p e same");
+
+        Text_K_RC->Draw("same");
+
+        K_minus_eta_pfRICH_lead_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_RC_eta_Q2_%i_y_%i.png" ,e_energy, p_energy, Q2bin, y_bin));
+
+      }
+
       //____________________________________________________________________________________________________________________________
 
       //K+
@@ -432,6 +567,44 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       }
 
 
+      //leading K+
+      h_eta_K_plus_lead_RC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_plus_lead_MC_RC_Q2_%i_y_%i" , Q2bin, y_bin));
+      h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_eta_K_plus_lead_MC_RC_pfRICH_Q2_%i_y_%i" , Q2bin, y_bin));
+
+      if( h_eta_K_plus_lead_RC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_plus_eta_pfRICH_lead_RC_can = new TCanvas(Form("K_plus_eta_pfRICH_lead_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_plus_eta_pfRICH_lead_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+        K_plus_eta_pfRICH_lead_RC_can->cd();
+
+        gPad->SetLogy();
+
+
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->GetXaxis()->CenterTitle();
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->GetYaxis()->CenterTitle();
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->SetMarkerStyle(28);
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->SetMarkerColor(4);
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->SetLineColor(4);
+        h_eta_K_plus_lead_RC[Q2bin][y_bin]->Draw("p e");
+
+
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->GetXaxis()->SetTitle("#eta");
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->GetXaxis()->CenterTitle();
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->GetYaxis()->SetTitle("Counts");
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->GetYaxis()->CenterTitle();
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->SetMarkerStyle(34);
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->SetMarkerColor(8);
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->SetLineColor(8);
+        h_eta_K_plus_lead_RC_pfRICH[Q2bin][y_bin]->Draw("p e same");
+
+        Text_K_RC->Draw("same");
+
+        K_plus_eta_pfRICH_lead_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_RC_eta_Q2_%i_y_%i.png" ,e_energy, p_energy, Q2bin, y_bin));
+
+      }
+
+
       //K purity histograms
 
       //K-
@@ -466,7 +639,39 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       }
 
 
-      //K-
+      //leading K-
+      h_K_minus_lead_purity_pfRICH_RC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_minus_lead_purity_pfRICH_MC_RC_Q2_%i_y_%i" , Q2bin, y_bin));
+
+      if( h_K_minus_lead_purity_pfRICH_RC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_minus_lead_purity_pfRICH_RC_can = new TCanvas(Form("K_minus_lead_purity_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_minus_lead_purity_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+
+        K_minus_lead_purity_pfRICH_RC_can->cd();
+
+
+        h_K_minus_lead_purity_pfRICH_RC[Q2bin][y_bin]->Draw();
+
+        double nK = h_K_minus_lead_purity_pfRICH_RC[Q2bin][y_bin]->GetBinContent(2);
+        double nBackground = h_K_minus_lead_purity_pfRICH_RC[Q2bin][y_bin]->GetBinContent(1);
+
+        double K_lead_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_K_minus_lead_purity = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_K_minus_lead_purity->SetTextFont(42);
+        Text_K_minus_lead_purity->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_K_minus_lead_purity->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_lead_purity));
+        //Text_K_minus_lead_purity->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+        Text_K_minus_lead_purity->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
+        Text_K_minus_lead_purity->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
+        Text_K_minus_lead_purity->SetFillColorAlpha(0, 0.01);
+        Text_K_minus_lead_purity->Draw("same");
+
+        K_minus_lead_purity_pfRICH_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_purity_pfRICH_RC_Q2_%i_yBin_%i.png", e_energy, p_energy, Q2bin, y_bin));
+
+      }
+      //________________________________________________________________________________________________________________________________________
+
+      //K+
       h_K_plus_purity_pfRICH_RC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_plus_purity_pfRICH_MC_RC_Q2_%i_y_%i" , Q2bin, y_bin));
 
       if( h_K_plus_purity_pfRICH_RC[Q2bin][y_bin]->Integral() > 0 )
@@ -496,6 +701,41 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         K_plus_purity_pfRICH_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_purity_pfRICH_RC_Q2_%i_yBin_%i.png", e_energy, p_energy , Q2bin, y_bin));
 
       }
+
+      //leading K+
+      h_K_plus_lead_purity_pfRICH_RC[Q2bin][y_bin] = (TH1F*)inFile->Get(Form("h_K_plus_lead_purity_pfRICH_MC_RC_Q2_%i_y_%i" , Q2bin, y_bin));
+
+      if( h_K_plus_lead_purity_pfRICH_RC[Q2bin][y_bin]->Integral() > 0 )
+      {
+        TCanvas *K_plus_lead_purity_pfRICH_RC_can = new TCanvas(Form("K_plus_lead_purity_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_plus_lead_purity_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), 1200, 1000);
+
+        K_plus_lead_purity_pfRICH_RC_can->cd();
+
+
+        h_K_plus_lead_purity_pfRICH_RC[Q2bin][y_bin]->Draw();
+
+        double nK = h_K_plus_lead_purity_pfRICH_RC[Q2bin][y_bin]->GetBinContent(2);
+        double nBackground = h_K_plus_lead_purity_pfRICH_RC[Q2bin][y_bin]->GetBinContent(1);
+
+        double K_lead_purity = ( nK/(nK+nBackground) )*100;
+
+        TPaveText *Text_K_plus_lead_purity = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+        Text_K_plus_lead_purity->SetTextFont(42);
+        Text_K_plus_lead_purity->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+        Text_K_plus_lead_purity->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_lead_purity));
+        //Text_K_plus_lead_purity->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+        Text_K_plus_lead_purity->AddText(Form("%0.1f < Q^{2} < %0.1f GeV^{2}/c^{2}", Q2_bins[Q2bin], Q2_bins[Q2bin+1]));
+        Text_K_plus_lead_purity->AddText(Form("%0.3f < y < %0.3f", y_bins[y_bin], y_bins[y_bin+1]));
+        Text_K_plus_lead_purity->SetFillColorAlpha(0, 0.01);
+        Text_K_plus_lead_purity->Draw("same");
+
+        K_plus_lead_purity_pfRICH_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_purity_pfRICH_RC_Q2_%i_yBin_%i.png", e_energy, p_energy, Q2bin, y_bin));
+
+      }
+
+      //___________________________________________________________________________________________________________________________________________
+
+      //leading K histograms
 
     }
   }
@@ -551,7 +791,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
     //leading K-
     h_p_K_minus_lead_MC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_minus_lead_MC_eta_%i" , eta_bin));
-    //h_p_K_minus_lead_MC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_minus_lead_MC_pfRICH_eta_%i" , eta_bin));
+    h_p_K_minus_lead_MC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_minus_lead_MC_pfRICH_eta_%i" , eta_bin));
 
     if( h_p_K_minus_lead_MC[eta_bin]->Integral() > 0 )
     {
@@ -569,7 +809,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       h_p_K_minus_lead_MC[eta_bin]->SetLineColor(4);
       h_p_K_minus_lead_MC[eta_bin]->Draw("p e");
 
-/*
+
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->GetYaxis()->SetTitle("Counts");
@@ -578,7 +818,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->SetMarkerColor(8);
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->SetLineColor(8);
       h_p_K_minus_lead_MC_pfRICH[eta_bin]->Draw("p e same");
-*/
+
       Text_K_p_MC->Draw("same");
 
       K_minus_lead_p_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_p_eta_%i.png" , e_energy, p_energy, eta_bin));
@@ -624,9 +864,9 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
     }
 
-    //leading K-
+    //leading K+
     h_p_K_plus_lead_MC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_lead_MC_eta_%i" , eta_bin));
-    //h_p_K_plus_lead_MC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_lead_MC_pfRICH_eta_%i" , eta_bin));
+    h_p_K_plus_lead_MC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_lead_MC_pfRICH_eta_%i" , eta_bin));
 
     if( h_p_K_plus_lead_MC[eta_bin]->Integral() > 0 )
     {
@@ -644,7 +884,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       h_p_K_plus_lead_MC[eta_bin]->SetLineColor(4);
       h_p_K_plus_lead_MC[eta_bin]->Draw("p e");
 
-/*
+
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->GetYaxis()->SetTitle("Counts");
@@ -653,7 +893,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->SetMarkerColor(8);
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->SetLineColor(8);
       h_p_K_plus_lead_MC_pfRICH[eta_bin]->Draw("p e same");
-*/
+
       Text_K_p_MC->Draw("same");
 
       K_plus_lead_p_pfRICH_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_p_eta_%i.png" , e_energy, p_energy, eta_bin));
@@ -694,6 +934,39 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
     }
 
 
+    //leading K-
+    h_K_minus_lead_purity_p_eta_pfRICH_MC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_minus_lead_purity_p_eta_pfRICH_MC_eta_%i" , eta_bin));
+
+    if(h_K_minus_lead_purity_p_eta_pfRICH_MC[eta_bin]->Integral() != 0)
+    {
+      TCanvas *K_minus_lead_purity_pfRICH_MC_can = new TCanvas(Form("K_minus_lead_purity_pfRICH_MC_can_eta_%i" , eta_bin), Form("K_minus_lead_purity_pfRICH_MC_can_eta_%i", eta_bin), 1200, 1000);
+
+      K_minus_lead_purity_pfRICH_MC_can->cd();
+
+      h_K_minus_lead_purity_p_eta_pfRICH_MC[eta_bin]->Draw();
+
+      double nK = h_K_minus_lead_purity_p_eta_pfRICH_MC[eta_bin]->GetBinContent(2);
+      double nBackground = h_K_minus_lead_purity_p_eta_pfRICH_MC[eta_bin]->GetBinContent(1);
+
+      double K_minus_lead_purity = ( nK/(nK+nBackground) )*100;
+
+      TPaveText *Text_K_minus_minus_lead_purity_MC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_K_minus_minus_lead_purity_MC->SetTextFont(42);
+      Text_K_minus_minus_lead_purity_MC->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_K_minus_minus_lead_purity_MC->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_minus_lead_purity));
+      //Text_K_minus_minus_lead_purity_MC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+      if(eta_bin < nEtaBins) Text_K_minus_minus_lead_purity_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+      else Text_K_minus_minus_lead_purity_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+      Text_K_minus_minus_lead_purity_MC->SetFillColorAlpha(0, 0.01);
+      Text_K_minus_minus_lead_purity_MC->Draw("same");
+
+      K_minus_lead_purity_pfRICH_MC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_purity_pfRICH_MC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    }
+
+    //_______________________________________________________________________________________________________
+
+
     //K+
     h_K_plus_purity_p_eta_pfRICH_MC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_plus_purity_p_eta_pfRICH_MC_eta_%i" , eta_bin));
 
@@ -725,7 +998,35 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
     }
 
 
+    //leading K+
+    h_K_plus_lead_purity_p_eta_pfRICH_MC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_plus_lead_purity_p_eta_pfRICH_MC_eta_%i" , eta_bin));
 
+    if(h_K_plus_lead_purity_p_eta_pfRICH_MC[eta_bin]->Integral() != 0)
+    {
+      TCanvas *K_plus_lead_purity_pfRICH_MC_can = new TCanvas(Form("K_plus_lead_purity_pfRICH_MC_can_eta_%i" , eta_bin), Form("K_plus_lead_purity_pfRICH_MC_can_eta_%i", eta_bin), 1200, 1000);
+
+      K_plus_lead_purity_pfRICH_MC_can->cd();
+
+      h_K_plus_lead_purity_p_eta_pfRICH_MC[eta_bin]->Draw();
+
+      double nK = h_K_plus_lead_purity_p_eta_pfRICH_MC[eta_bin]->GetBinContent(2);
+      double nBackground = h_K_plus_lead_purity_p_eta_pfRICH_MC[eta_bin]->GetBinContent(1);
+
+      double K_plus_lead_purity = ( nK/(nK+nBackground) )*100;
+
+      TPaveText *Text_K_plus_plus_lead_purity_MC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_K_plus_plus_lead_purity_MC->SetTextFont(42);
+      Text_K_plus_plus_lead_purity_MC->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_K_plus_plus_lead_purity_MC->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_plus_lead_purity));
+      //Text_K_plus_plus_lead_purity_MC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+      if(eta_bin < nEtaBins) Text_K_plus_plus_lead_purity_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+      else Text_K_plus_plus_lead_purity_MC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+      Text_K_plus_plus_lead_purity_MC->SetFillColorAlpha(0, 0.01);
+      Text_K_plus_plus_lead_purity_MC->Draw("same");
+
+      K_plus_lead_purity_pfRICH_MC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_purity_pfRICH_MC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    }
     //_________________________________________________________________________________________________________________________
 
 
@@ -777,6 +1078,46 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
     }
 
+
+    //leading K-
+    h_p_K_minus_lead_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_minus_lead_MC_RC_eta_%i" , eta_bin));
+    h_p_K_minus_lead_RC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_minus_lead_MC_RC_pfRICH_eta_%i" , eta_bin));
+
+    if( h_p_K_minus_lead_RC[eta_bin]->Integral() > 0 )
+    {
+      TCanvas *K_minus_p_pfRICH_lead_RC_can = new TCanvas(Form("K_minus_p_pfRICH_lead_RC_can_eta_%i" , eta_bin), Form("K_minus_p_pfRICH_lead_RC_can_eta_%i" , eta_bin), 1200, 1000);
+      K_minus_p_pfRICH_lead_RC_can->cd();
+
+      gPad->SetLogy();
+
+
+      h_p_K_minus_lead_RC[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
+      h_p_K_minus_lead_RC[eta_bin]->GetXaxis()->CenterTitle();
+      h_p_K_minus_lead_RC[eta_bin]->GetYaxis()->SetTitle("Counts");
+      h_p_K_minus_lead_RC[eta_bin]->GetYaxis()->CenterTitle();
+      h_p_K_minus_lead_RC[eta_bin]->SetMarkerStyle(28);
+      h_p_K_minus_lead_RC[eta_bin]->SetMarkerColor(4);
+      h_p_K_minus_lead_RC[eta_bin]->SetLineColor(4);
+      h_p_K_minus_lead_RC[eta_bin]->Draw("p e");
+
+
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->GetYaxis()->SetTitle("Counts");
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->SetMarkerStyle(34);
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->SetMarkerColor(8);
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->SetLineColor(8);
+      h_p_K_minus_lead_RC_pfRICH[eta_bin]->Draw("p e same");
+
+      Text_K_p_RC->Draw("same");
+
+      K_minus_p_pfRICH_lead_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_RC_p_eta_%i.png" , e_energy, p_energy, eta_bin));
+
+    }
+
+    //__________________________________________________________________________________________________________________________________
+
     //K+
     h_p_K_plus_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_MC_RC_eta_%i" , eta_bin));
     h_p_K_plus_RC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_MC_RC_pfRICH_eta_%i" , eta_bin));
@@ -814,15 +1155,54 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
     }
 
+    //leading K+
+    h_p_K_plus_lead_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_lead_MC_RC_eta_%i" , eta_bin));
+    h_p_K_plus_lead_RC_pfRICH[eta_bin] = (TH1F*)inFile->Get(Form("h_p_K_plus_lead_MC_RC_pfRICH_eta_%i" , eta_bin));
+
+    if( h_p_K_plus_lead_RC[eta_bin]->Integral() > 0 )
+    {
+      TCanvas *K_plus_p_pfRICH_lead_RC_can = new TCanvas(Form("K_plus_p_pfRICH_lead_RC_can_eta_%i" , eta_bin), Form("K_plus_p_pfRICH_lead_RC_can_eta_%i" , eta_bin), 1200, 1000);
+      K_plus_p_pfRICH_lead_RC_can->cd();
+
+      gPad->SetLogy();
+
+
+      h_p_K_plus_lead_RC[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
+      h_p_K_plus_lead_RC[eta_bin]->GetXaxis()->CenterTitle();
+      h_p_K_plus_lead_RC[eta_bin]->GetYaxis()->SetTitle("Counts");
+      h_p_K_plus_lead_RC[eta_bin]->GetYaxis()->CenterTitle();
+      h_p_K_plus_lead_RC[eta_bin]->SetMarkerStyle(28);
+      h_p_K_plus_lead_RC[eta_bin]->SetMarkerColor(4);
+      h_p_K_plus_lead_RC[eta_bin]->SetLineColor(4);
+      h_p_K_plus_lead_RC[eta_bin]->Draw("p e");
+
+
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->GetXaxis()->SetTitle("p (GeV/#it{c})");
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->GetXaxis()->CenterTitle();
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->GetYaxis()->SetTitle("Counts");
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->GetYaxis()->CenterTitle();
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->SetMarkerStyle(34);
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->SetMarkerColor(8);
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->SetLineColor(8);
+      h_p_K_plus_lead_RC_pfRICH[eta_bin]->Draw("p e same");
+
+      Text_K_p_RC->Draw("same");
+
+      K_plus_p_pfRICH_lead_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_RC_p_eta_%i.png" , e_energy, p_energy, eta_bin));
+
+    }
+
+    //__________________________________________________________________________________________________________________________________
+
      //K purity histograms
     //K-
     h_K_minus_purity_p_eta_pfRICH_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_minus_purity_p_eta_pfRICH_MC_RC_eta_%i" , eta_bin));
 
     if(h_K_minus_purity_p_eta_pfRICH_RC[eta_bin]->Integral() != 0)
     {
-      TCanvas *K_minus_purity_pfRICH_RC_RC_can = new TCanvas(Form("K_minus_purity_pfRICH_RC_RC_can_eta_%i" , eta_bin), Form("K_minus_purity_pfRICH_RC_RC_can_eta_%i", eta_bin), 1200, 1000);
+      TCanvas *K_minus_purity_pfRICH_MC_RC_can = new TCanvas(Form("K_minus_purity_pfRICH_MC_RC_can_eta_%i" , eta_bin), Form("K_minus_purity_pfRICH_MC_RC_can_eta_%i", eta_bin), 1200, 1000);
 
-      K_minus_purity_pfRICH_RC_RC_can->cd();
+      K_minus_purity_pfRICH_MC_RC_can->cd();
 
       h_K_minus_purity_p_eta_pfRICH_RC[eta_bin]->Draw();
 
@@ -841,9 +1221,42 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       Text_K_minus_minus_purity_RC->SetFillColorAlpha(0, 0.01);
       Text_K_minus_minus_purity_RC->Draw("same");
 
-      K_minus_purity_pfRICH_RC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+      K_minus_purity_pfRICH_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
 
     }
+
+
+    //leading K-
+    h_K_minus_lead_purity_p_eta_pfRICH_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_minus_lead_purity_p_eta_pfRICH_MC_RC_eta_%i" , eta_bin));
+
+    if(h_K_minus_lead_purity_p_eta_pfRICH_RC[eta_bin]->Integral() != 0)
+    {
+      TCanvas *K_minus_lead_purity_pfRICH_MC_RC_can = new TCanvas(Form("K_minus_lead_purity_pfRICH_MC_RC_can_eta_%i" , eta_bin), Form("K_minus_lead_purity_pfRICH_MC_RC_can_eta_%i", eta_bin), 1200, 1000);
+
+      K_minus_lead_purity_pfRICH_MC_RC_can->cd();
+
+      h_K_minus_lead_purity_p_eta_pfRICH_RC[eta_bin]->Draw();
+
+      double nK = h_K_minus_lead_purity_p_eta_pfRICH_RC[eta_bin]->GetBinContent(2);
+      double nBackground = h_K_minus_lead_purity_p_eta_pfRICH_RC[eta_bin]->GetBinContent(1);
+
+      double K_minus_lead_purity = ( nK/(nK+nBackground) )*100;
+
+      TPaveText *Text_K_minus_minus_lead_purity_RC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_K_minus_minus_lead_purity_RC->SetTextFont(42);
+      Text_K_minus_minus_lead_purity_RC->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_K_minus_minus_lead_purity_RC->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_minus_lead_purity));
+      //Text_K_minus_minus_lead_purity_RC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+      if(eta_bin < nEtaBins) Text_K_minus_minus_lead_purity_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+      else Text_K_minus_minus_lead_purity_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+      Text_K_minus_minus_lead_purity_RC->SetFillColorAlpha(0, 0.01);
+      Text_K_minus_minus_lead_purity_RC->Draw("same");
+
+      K_minus_lead_purity_pfRICH_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_minus_lead_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    }
+
+    //________________________________________________________________________________________________________________________________
 
 
     //K+
@@ -851,9 +1264,9 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
     if(h_K_plus_purity_p_eta_pfRICH_RC[eta_bin]->Integral() != 0 )
     {
-      TCanvas *K_plus_purity_pfRICH_RC_RC_can = new TCanvas(Form("K_plus_purity_pfRICH_RC_RC_can_eta_%i" , eta_bin), Form("K_plus_purity_pfRICH_RC_RC_can_eta_%i" , eta_bin), 1200, 1000);
+      TCanvas *K_plus_purity_pfRICH_MC_RC_can = new TCanvas(Form("K_plus_purity_pfRICH_MC_RC_can_eta_%i" , eta_bin), Form("K_plus_purity_pfRICH_MC_RC_can_eta_%i" , eta_bin), 1200, 1000);
 
-      K_plus_purity_pfRICH_RC_RC_can->cd();
+      K_plus_purity_pfRICH_MC_RC_can->cd();
 
       h_K_plus_purity_p_eta_pfRICH_RC[eta_bin]->Draw();
 
@@ -872,7 +1285,37 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       Text_K_plus_minus_purity_RC->SetFillColorAlpha(0, 0.01);
       Text_K_plus_minus_purity_RC->Draw("same");
 
-      K_plus_purity_pfRICH_RC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+      K_plus_purity_pfRICH_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
+
+    }
+
+    //leading K+
+    h_K_plus_lead_purity_p_eta_pfRICH_RC[eta_bin] = (TH1F*)inFile->Get(Form("h_K_plus_lead_purity_p_eta_pfRICH_MC_RC_eta_%i" , eta_bin));
+
+    if(h_K_plus_lead_purity_p_eta_pfRICH_RC[eta_bin]->Integral() != 0)
+    {
+      TCanvas *K_plus_lead_purity_pfRICH_MC_RC_can = new TCanvas(Form("K_plus_lead_purity_pfRICH_MC_RC_can_eta_%i" , eta_bin), Form("K_plus_lead_purity_pfRICH_MC_RC_can_eta_%i", eta_bin), 1200, 1000);
+
+      K_plus_lead_purity_pfRICH_MC_RC_can->cd();
+
+      h_K_plus_lead_purity_p_eta_pfRICH_RC[eta_bin]->Draw();
+
+      double nK = h_K_plus_lead_purity_p_eta_pfRICH_RC[eta_bin]->GetBinContent(2);
+      double nBackground = h_K_plus_lead_purity_p_eta_pfRICH_RC[eta_bin]->GetBinContent(1);
+
+      double K_plus_lead_purity = ( nK/(nK+nBackground) )*100;
+
+      TPaveText *Text_K_plus_plus_lead_purity_RC = new TPaveText(0.55, 0.65, 0.84, 0.85, "NDC");
+      Text_K_plus_plus_lead_purity_RC->SetTextFont(42);
+      Text_K_plus_plus_lead_purity_RC->AddText(Form("MC ep DIS %ix%i GeV", e_energy, p_energy));
+      Text_K_plus_plus_lead_purity_RC->AddText(Form("K^{-} pfRICH purity: %0.1f%%", K_plus_lead_purity));
+      //Text_K_plus_plus_lead_purity_RC->AddText(Form("%0.1f < p < %0.1f GeV/c", mom_bins, mom_bins[mom_bin+1]));
+      if(eta_bin < nEtaBins) Text_K_plus_plus_lead_purity_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[eta_bin], eta_bins[eta_bin+1]));
+      else Text_K_plus_plus_lead_purity_RC->AddText(Form("%0.1f < #eta < %0.1f GeV/c", eta_bins[0], eta_bins[nEtaBins]));
+      Text_K_plus_plus_lead_purity_RC->SetFillColorAlpha(0, 0.01);
+      Text_K_plus_plus_lead_purity_RC->Draw("same");
+
+      K_plus_lead_purity_pfRICH_MC_RC_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/K_plus_lead_purity_pfRICH_RC_eta_%i.png", e_energy, p_energy, eta_bin));
 
     }
 
