@@ -118,50 +118,51 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
   z_h_can->SaveAs(Form("/home/jvanek/C_drive_windows/Work/Analysis/EIC/EICrecon/figs/%ix%i/K_purity/h_hadron_zh.png",e_energy, p_energy));
 
 
-  TCanvas *K_minus_lead_eta_pfRICH_one_can = new TCanvas("K_minus_lead_eta_pfRICH_one_can", "K_minus_lead_eta_pfRICH_one_can", 8000, 6000);
-  K_minus_lead_eta_pfRICH_one_can->Divide(4,4);
+  TCanvas *K_minus_lead_eta_pfRICH_one_can = new TCanvas("K_minus_lead_eta_pfRICH_one_can", "K_minus_lead_eta_pfRICH_one_can", 8000, 3000);
+  K_minus_lead_eta_pfRICH_one_can->Divide(4,2);
 
-  TCanvas *Lead_p_pfRICH_one_can = new TCanvas("Lead_p_pfRICH_one_can", "Lead_p_pfRICH_one_can", 8000, 6000);
-  Lead_p_pfRICH_one_can->Divide(4,4);
+  TCanvas *Lead_p_pfRICH_one_can = new TCanvas("Lead_p_pfRICH_one_can", "Lead_p_pfRICH_one_can", 8000, 3000);
+  Lead_p_pfRICH_one_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_one_can = new TCanvas("K_minus_lead_p_pfRICH_one_can", "K_minus_lead_p_pfRICH_one_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_one_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_one_can = new TCanvas("K_minus_lead_p_pfRICH_one_can", "K_minus_lead_p_pfRICH_one_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_one_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_compare_one_can = new TCanvas("K_minus_lead_p_pfRICH_compare_one_can", "K_minus_lead_p_pfRICH_compare_one_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_compare_one_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_compare_one_can = new TCanvas("K_minus_lead_p_pfRICH_compare_one_can", "K_minus_lead_p_pfRICH_compare_one_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_compare_one_can->Divide(4,2);
 
 
-  TCanvas *K_minus_lead_p_pfRICH_purity_one_can = new TCanvas("K_minus_lead_p_pfRICH_purity_one_can", "K_minus_lead_p_pfRICH_purity_one_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_purity_one_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_purity_one_can = new TCanvas("K_minus_lead_p_pfRICH_purity_one_can", "K_minus_lead_p_pfRICH_purity_one_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_purity_one_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_purity_wide_one_can = new TCanvas("K_minus_lead_p_pfRICH_purity_wide_one_can", "K_minus_lead_p_pfRICH_purity_wide_one_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_purity_wide_one_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_purity_wide_one_can = new TCanvas("K_minus_lead_p_pfRICH_purity_wide_one_can", "K_minus_lead_p_pfRICH_purity_wide_one_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_purity_wide_one_can->Divide(4,2);
 
   //MC->RC canvases
-  TCanvas *K_minus_lead_eta_pfRICH_one_RC_can = new TCanvas("K_minus_lead_eta_pfRICH_one_RC_can", "K_minus_lead_eta_pfRICH_one_RC_can", 8000, 6000);
-  K_minus_lead_eta_pfRICH_one_RC_can->Divide(4,4);
+  TCanvas *K_minus_lead_eta_pfRICH_one_RC_can = new TCanvas("K_minus_lead_eta_pfRICH_one_RC_can", "K_minus_lead_eta_pfRICH_one_RC_can", 8000, 3000);
+  K_minus_lead_eta_pfRICH_one_RC_can->Divide(4,2);
 
-  TCanvas *Lead_p_pfRICH_one_RC_can = new TCanvas("Lead_p_pfRICH_one_RC_can", "Lead_p_pfRICH_one_RC_can", 8000, 6000);
-  Lead_p_pfRICH_one_RC_can->Divide(4,4);
+  TCanvas *Lead_p_pfRICH_one_RC_can = new TCanvas("Lead_p_pfRICH_one_RC_can", "Lead_p_pfRICH_one_RC_can", 8000, 3000);
+  Lead_p_pfRICH_one_RC_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_one_RC_can", "K_minus_lead_p_pfRICH_one_RC_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_one_RC_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_one_RC_can", "K_minus_lead_p_pfRICH_one_RC_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_one_RC_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_compare_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_compare_one_RC_can", "K_minus_lead_p_pfRICH_compare_one_RC_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_compare_one_RC_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_compare_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_compare_one_RC_can", "K_minus_lead_p_pfRICH_compare_one_RC_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_compare_one_RC_can->Divide(4,2);
 
 
-  TCanvas *K_minus_lead_p_pfRICH_purity_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_purity_one_RC_can", "K_minus_lead_p_pfRICH_purity_one_RC_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_purity_one_RC_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_purity_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_purity_one_RC_can", "K_minus_lead_p_pfRICH_purity_one_RC_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_purity_one_RC_can->Divide(4,2);
 
-  TCanvas *K_minus_lead_p_pfRICH_purity_wide_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_purity_wide_one_RC_can", "K_minus_lead_p_pfRICH_purity_wide_one_RC_can", 8000, 6000);
-  K_minus_lead_p_pfRICH_purity_wide_one_RC_can->Divide(4,4);
+  TCanvas *K_minus_lead_p_pfRICH_purity_wide_one_RC_can = new TCanvas("K_minus_lead_p_pfRICH_purity_wide_one_RC_can", "K_minus_lead_p_pfRICH_purity_wide_one_RC_can", 8000, 3000);
+  K_minus_lead_p_pfRICH_purity_wide_one_RC_can->Divide(4,2);
 
 
   for(unsigned int Q2bin = 0; Q2bin < nQ2bins; Q2bin++)
   {
     for(unsigned int y_bin = 0; y_bin < nyInelParBins; y_bin++)
     {
+      if(y_bin == 0 || y_bin == 1) continue; //skip first Q2 bin for final figures
 
       TPaveText *Text_K_MC = new TPaveText(0.15, 0.65, 0.4, 0.85, "NDC");
       Text_K_MC->SetTextFont(42);
@@ -237,7 +238,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       if( h_eta_K_minus_lead_MC[Q2bin][y_bin]->Integral() > 0 )
       {
 
-        K_minus_lead_eta_pfRICH_one_can->cd( (4*Q2bin+y_bin)+1 );
+        //K_minus_lead_eta_pfRICH_one_can->cd( (4*y_bin+Q2bin)+1 );
+        K_minus_lead_eta_pfRICH_one_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -267,7 +269,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
         //_____________________________________________________________________________
 
-        Lead_p_pfRICH_one_can->cd( (4*Q2bin+y_bin)+1 );
+        //Lead_p_pfRICH_one_can->cd( (4*y_bin+Q2bin)+1 );
+        Lead_p_pfRICH_one_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -320,7 +323,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //TCanvas *K_minus_lead_p_pfRICH_can = new TCanvas(Form("K_minus_lead_p_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_minus_lead_p_pfRICH_can_Q2_%i_y_%i" , Q2bin, y_bin), 2000, 1500);
         //K_minus_lead_p_pfRICH_can->cd();
 
-        K_minus_lead_p_pfRICH_one_can->cd( (4*Q2bin+y_bin)+1 );
+        //K_minus_lead_p_pfRICH_one_can->cd( (4*y_bin+Q2bin)+1 );
+        K_minus_lead_p_pfRICH_one_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -362,7 +366,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
         //gPad->SetLogy();
 
-        K_minus_lead_p_pfRICH_compare_one_can->cd( (4*Q2bin+y_bin)+1 );
+        //K_minus_lead_p_pfRICH_compare_one_can->cd( (4*y_bin+Q2bin)+1 );
+        K_minus_lead_p_pfRICH_compare_one_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -418,7 +423,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //add K+ here if needed
 
         //purity as a function of p
-        K_minus_lead_p_pfRICH_purity_one_can->cd((4*Q2bin+y_bin)+1);
+        //K_minus_lead_p_pfRICH_purity_one_can->cd((4*y_bin+Q2bin)+1);
+        K_minus_lead_p_pfRICH_purity_one_can->cd((4*(y_bin-2)+Q2bin)+1);
 
 
         h_p_K_as_K_minus_lead_MC_Q2_y_pfRICH_clone[Q2bin][y_bin] = (TH1F*)h_p_K_as_K_minus_lead_MC_Q2_y_pfRICH[Q2bin][y_bin]->Clone(Form("h_p_K_as_K_minus_lead_MC_pfRICH_clone_Q2_%i_y_%i" , Q2bin, y_bin));
@@ -459,7 +465,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //______________________________________________________________________________
 
 
-        K_minus_lead_p_pfRICH_purity_wide_one_can->cd((4*Q2bin+y_bin)+1);
+        //K_minus_lead_p_pfRICH_purity_wide_one_can->cd((4*y_bin+Q2bin)+1);
+        K_minus_lead_p_pfRICH_purity_wide_one_can->cd((4*(y_bin-2)+Q2bin)+1);
 
 
         //h_p_K_as_K_minus_lead_MC_Q2_y_pfRICH_clone[Q2bin][y_bin] = (TH1F*)h_p_K_as_K_minus_lead_MC_Q2_y_pfRICH[Q2bin][y_bin]->Clone(Form("h_p_K_as_K_minus_lead_MC_pfRICH_clone_Q2_%i_y_%i" , Q2bin, y_bin));
@@ -509,7 +516,7 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
       if( h_eta_K_minus_lead_MC[Q2bin][y_bin]->Integral() > 0 )
       {
 /*
-        Lead_p_pfRICH_one_RC_can->cd( (4*Q2bin+y_bin)+1 );
+        Lead_p_pfRICH_one_RC_can->cd( (4*y_bin+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -562,7 +569,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //TCanvas *K_minus_lead_p_pfRICH_RC_can = new TCanvas(Form("K_minus_lead_p_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), Form("K_minus_lead_p_pfRICH_RC_can_Q2_%i_y_%i" , Q2bin, y_bin), 2000, 1500);
         //K_minus_lead_p_pfRICH_RC_can->cd();
 */
-        K_minus_lead_p_pfRICH_one_RC_can->cd( (4*Q2bin+y_bin)+1 );
+        //K_minus_lead_p_pfRICH_one_RC_can->cd( (4*y_bin+Q2bin)+1 );
+        K_minus_lead_p_pfRICH_one_RC_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -611,7 +619,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
 
         //gPad->SetLogy();
 
-        K_minus_lead_p_pfRICH_compare_one_RC_can->cd( (4*Q2bin+y_bin)+1 );
+        //K_minus_lead_p_pfRICH_compare_one_RC_can->cd( (4*y_bin+Q2bin)+1 );
+        K_minus_lead_p_pfRICH_compare_one_RC_can->cd( (4*(y_bin-2)+Q2bin)+1 );
 
         gPad->SetLogy();
 
@@ -667,7 +676,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //add K+ here if needed
 
         //purity as a function of p
-        K_minus_lead_p_pfRICH_purity_one_RC_can->cd((4*Q2bin+y_bin)+1);
+        //K_minus_lead_p_pfRICH_purity_one_RC_can->cd((4*y_bin+Q2bin)+1);
+        K_minus_lead_p_pfRICH_purity_one_RC_can->cd((4*(y_bin-2)+Q2bin)+1);
 
 
         h_p_K_as_K_minus_lead_RC_Q2_y_pfRICH_clone[Q2bin][y_bin] = (TH1F*)h_p_K_as_K_minus_lead_RC_Q2_y_pfRICH[Q2bin][y_bin]->Clone(Form("h_p_K_as_K_minus_lead_RC_pfRICH_clone_Q2_%i_y_%i" , Q2bin, y_bin));
@@ -708,7 +718,8 @@ void Plot_histos_K(int e_energy = 18, int p_energy = 275)
         //______________________________________________________________________________
 
 
-        K_minus_lead_p_pfRICH_purity_wide_one_RC_can->cd((4*Q2bin+y_bin)+1);
+        //K_minus_lead_p_pfRICH_purity_wide_one_RC_can->cd((4*y_bin+Q2bin)+1);
+        K_minus_lead_p_pfRICH_purity_wide_one_RC_can->cd((4*(y_bin-2)+Q2bin)+1);
 
 
         //h_p_K_as_K_minus_lead_RC_Q2_y_pfRICH_clone[Q2bin][y_bin] = (TH1F*)h_p_K_as_K_minus_lead_RC_Q2_y_pfRICH[Q2bin][y_bin]->Clone(Form("h_p_K_as_K_minus_lead_RC_pfRICH_clone_Q2_%i_y_%i" , Q2bin, y_bin));
